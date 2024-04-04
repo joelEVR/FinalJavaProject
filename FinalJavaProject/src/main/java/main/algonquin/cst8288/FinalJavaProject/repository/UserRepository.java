@@ -7,8 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
-import main.algonquin.cst8288.FinalJavaProject.model.User;
-import main.algonquin.cst8288.FinalJavaProject.model.UserType;
+import main.algonquin.cst8288.FinalJavaProject.loginregister.User;
 public class UserRepository {
     String url;
 	String username;

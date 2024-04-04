@@ -8,9 +8,6 @@ import java.sql.SQLException;
 import main.algonquin.cst8288.FinalJavaProject.model.Purchase;
 
 public class PurchaseRepository {
-    private String url = "jdbc:yourDatabaseUrl"; // Customize with your actual database URL
-    private String user = "yourDatabaseUser";    // Customize with your actual database user
-    private String password = "yourDatabasePassword"; // Customize with your actual database password
 
     // Helper method to open database connection
     private Connection getConnection() throws SQLException {

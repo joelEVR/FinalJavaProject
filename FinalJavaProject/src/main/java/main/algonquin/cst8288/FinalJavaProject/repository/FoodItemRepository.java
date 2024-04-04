@@ -10,9 +10,6 @@ import main.algonquin.cst8288.FinalJavaProject.model.FoodItem;
 import main.algonquin.cst8288.FinalJavaProject.model.FoodItemStatus;
 
 public class FoodItemRepository {
-    private String url = "jdbc:yourDatabaseUrl"; // Customize with your database URL
-    private String user = "yourDatabaseUser";    // Customize with your database user
-    private String password = "yourDatabasePassword"; // Customize with your database password
 
     // Helper method to open database connection
     private Connection getConnection() throws SQLException {
