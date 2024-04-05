@@ -4,9 +4,7 @@ import java.util.List;
 
 import main.algonquin.cst8288.FinalJavaProject.model.FoodItem;
 import main.algonquin.cst8288.FinalJavaProject.model.Subscription;
-import main.algonquin.cst8288.FinalJavaProject.model.User;
 import main.algonquin.cst8288.FinalJavaProject.repository.FoodItemRepository;
-import main.algonquin.cst8288.FinalJavaProject.repository.UserRepository;
 import main.algonquin.cst8288.FinalJavaProject.utility.NotificationUtility;
 
 public class FoodItemService {

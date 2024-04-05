@@ -1,6 +1,6 @@
 package main.algonquin.cst8288.FinalJavaProject.utility;
 
-import main.algonquin.cst8288.FinalJavaProject.model.User;
+import main.algonquin.cst8288.FinalJavaProject.loginregister.User;
 
 public class NotificationUtility {
     

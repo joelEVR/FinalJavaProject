@@ -7,9 +7,6 @@ import java.util.List;
 import main.algonquin.cst8288.FinalJavaProject.model.Claim;
 
 public class ClaimRepository {
-    private String url = "jdbc:yourDatabaseUrl"; // Customize with your database URL
-    private String user = "yourDatabaseUser";    // Customize with your database user
-    private String password = "yourDatabasePassword"; // Customize with your database password
 
     private Connection getConnection() throws SQLException {
         return DriverManager.getConnection(url, user, password);
