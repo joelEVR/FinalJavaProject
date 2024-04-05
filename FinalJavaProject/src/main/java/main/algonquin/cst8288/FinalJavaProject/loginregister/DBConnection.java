@@ -6,29 +6,31 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class DBConnection {
+	
+	private static Connection connection = null;
 
-    public static Connection getConnection() {
-        Connection con = null;
-        // TODO: 23-Jan-20 change the name of the database you want to connect to (needs to have tables USERS,WATCHES).
-        //  SQL file will be uploaded within the project under Folder web/SQL_baza
-        String url = "jdbc:mysql://localhost:3306/fwrp";
-        String username = "username";
-        String password = "username";
+    // Constructor privado para prevenir instanciación
+    private DBConnection() {}
 
-        try {
-            try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-//                Class.forName("com.mysql.jdbc.Driver");
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+	public static Connection getConnection() {
+        if (connection == null) {
+            synchronized (DBConnection.class) {
+                if (connection == null) {
+                    String url = "jdbc:mysql://localhost:3306/fwrp";
+                    String username = "username";
+                    String password = "username";
+                    try {
+                        Class.forName("com.mysql.cj.jdbc.Driver");
+                        connection = DriverManager.getConnection(url, username, password);
+                        System.out.println("Post establishing a DB connection - " + connection);
+                    } catch (ClassNotFoundException | SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
-            con = DriverManager.getConnection(url, username, password);
-            System.out.println("Post establishing a DB connection - " + con);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-
-        return con;
+        
+        return connection;
     }
 
     public static PreparedStatement getPreparedStatement(String sql) {
