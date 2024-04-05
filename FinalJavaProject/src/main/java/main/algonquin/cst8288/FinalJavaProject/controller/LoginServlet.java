@@ -21,6 +21,8 @@ public class LoginServlet extends HttpServlet {
         
         if (user.isPresent()) {
             // Successful authentication. You can store user info in session, etc.
+        	// code to retrive user: User loggedInUser = (User) request.getSession().getAttribute("user");
+
             request.getSession().setAttribute("user", user.get());
             response.sendRedirect("/home"); // Redirect to a home page or dashboard
         } else {
