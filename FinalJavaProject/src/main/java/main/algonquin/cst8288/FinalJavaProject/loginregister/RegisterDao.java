@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 public class RegisterDao {
 
     public String registerUser(User user) {
@@ -22,10 +24,13 @@ public class RegisterDao {
             con = DBConnection.getConnection();
             String query = "INSERT INTO users(id, firstname, username, email, password, userType) VALUES (null, ?, ?, ?, ?, ?)";
             preparedStatement = con.prepareStatement(query); //Making use of prepared statements to insert bunch of data
+            
+            String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt(12)); // Encriptar contraseña
+            
             preparedStatement.setString(1, firstname);
             preparedStatement.setString(2, username);
             preparedStatement.setString(3, email);
-            preparedStatement.setString(4, password);
+            preparedStatement.setString(4, hashedPassword);
             preparedStatement.setString(5, userType);
 
             int i = preparedStatement.executeUpdate();
