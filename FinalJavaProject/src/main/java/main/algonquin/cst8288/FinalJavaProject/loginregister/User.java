@@ -2,8 +2,8 @@ package main.algonquin.cst8288.FinalJavaProject.loginregister;
 
 public class User {
 
-	private int id;
-    private String firstname;
+	private int userID;
+    private String name;
     private String username;
     private String email;
     private String password;
@@ -12,12 +12,12 @@ public class User {
     public User() {
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setName(String name) {
+        this.name = name;
     }
 
 
@@ -53,11 +53,11 @@ public class User {
         this.userType = userType;
     }
 
-	public int getId() {
-		return id;
+	public int getUserId() {
+		return userID;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setUserId(int userID) {
+		this.userID = userID;
 	}
 }

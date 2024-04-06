@@ -115,12 +115,5 @@ public class FoodItem {
 		this.averageDailySales = averageDailySales;
 	}
 
-
-    
-
-
-
-
-
 }
 

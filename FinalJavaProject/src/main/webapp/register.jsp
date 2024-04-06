@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -8,13 +8,13 @@
 <title>Register</title>
 <script>
 	function validate() {
-		var firstname = document.form.firstname.value;
+		var name = document.form.name.value;
 		var email = document.form.email.value;
 		var username = document.form.username.value;
 		var password = document.form.password.value;
 		var conpassword = document.form.conpassword.value;
 		var userType = document.form.userType.value;
-		if (firstname == null || firstname === "") {
+		if (name == null || name === "") {
 			alert("First Name can't be blank");
 			return false;
 		} else if (email == null || email === "") {
@@ -44,10 +44,9 @@
 			class="form register" onsubmit="return validate()">
 
 			<div class="form__field">
-				<label for="firstname"> <img src="svg/name.svg" width="20px"
-					height="20px" alt="name_logo"> <span class="hidden">First
-						name</span>
-				</label> <input id="firstname" type="text" name="firstname"
+				<label for="name"> <img src="svg/name.svg" width="20px"
+					height="20px" alt="name_logo"> <span class="hidden">Name</span>
+				</label> <input id="name" type="text" name="name"
 					class="form__input" placeholder="Your name" required>
 			</div>
 
