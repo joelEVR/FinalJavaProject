@@ -69,13 +69,14 @@ CREATE TABLE Notifications (
 
 CREATE TABLE FoodItemsForExchange (
     ItemId INT AUTO_INCREMENT PRIMARY KEY,
-    UserId INT NOT NULL,
+    UserId INT NOT NULL , 
     Title VARCHAR(255) NOT NULL,
     Description TEXT,
     Quantity INT NOT NULL,
     PickupLocation VARCHAR(255) NOT NULL,
     ExpirationDate DATE NOT NULL,
-    Status ENUM('available', 'reserved', 'exchanged') NOT NULL
+    Status ENUM('available', 'reserved', 'exchanged') NOT NULL,
+    FOREIGN KEY (UserID) REFERENCES userID(Users)
 );
 
 INSERT INTO FoodItemsForExchange (UserId, Title, Description, Quantity, PickupLocation, ExpirationDate, Status)
