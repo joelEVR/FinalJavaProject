@@ -57,5 +57,6 @@
 		<servlet-name>ItemDonatedServlet</servlet-name>
 		<url-pattern>/ItemDonatedServlet</url-pattern>
 	</servlet-mapping>
+	
 
 </web-app>

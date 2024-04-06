@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.List"%>
+<%@ page import="main.algonquin.cst8288.FinalJavaProject.bonusActivity.ItemDonated"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,7 +52,7 @@ th {
 	out.println("Locations list is null in JSP."); // Debugging line in JSP
 	}
 	%> --%>
-	<table>
+	<%-- <table>
 		<thead>
 			<tr>
 				<th>Location</th>
@@ -71,7 +73,63 @@ th {
 			%>
 		</tbody>
 
-	</table>
+	</table> --%>
+	
+	<!-- Lista desplegable para seleccionar ubicaciones -->
+    <form action="ItemDonatedServlet" method="get">
+        <input type="hidden" name="action" value="showItemsByLocation">
+        <select name="location" onchange="this.form.submit()">
+            <option>Select Location</option>
+            <% 
+            List<String> locations = (List<String>) request.getAttribute("locationList");
+            if (locations != null) {
+                for (String location : locations) {
+            %>
+                <option value="<%= location %>"><%= location %></option>
+            <% 
+                }
+            }
+            %>
+        </select>
+    </form>
 
+    <!-- Tabla para mostrar los ítems de la ubicación seleccionada -->
+    <h3>Items at Selected Location</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Quantity</th>
+                <th>Expiration Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% 
+            List<ItemDonated> items = (List<ItemDonated>) request.getAttribute("itemsList");
+            if (items != null && !items.isEmpty()) {
+                for (ItemDonated item : items) {
+            %>
+            <tr>
+                <td><%= item.getTitle() %></td>
+                <td><%= item.getDescription() %></td>
+                <td><%= item.getQuantity() %></td>
+                <td><%= item.getExpirationDate() %></td>
+                <td><%= item.getStatus() %></td>
+            </tr>
+            <% 
+                }
+            } else {
+            %>
+            <tr>
+                <td colspan="5">No items found for the selected location.</td>
+            </tr>
+            <% 
+            }
+            %>
+        </tbody>
+    </table>
 </body>
+
 </html>
