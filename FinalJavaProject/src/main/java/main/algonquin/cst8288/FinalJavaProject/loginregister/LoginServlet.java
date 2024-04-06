@@ -36,16 +36,31 @@ public class LoginServlet extends HttpServlet {
 			switch (userValidate) {
 			case "RETAILER":
 				System.out.println("Retailer role entered");
-				request.getRequestDispatcher("/retailer.jsp").forward(request, response);
-				break;
+				// En LoginServlet, después de la autenticación exitosa
+				response.sendRedirect(request.getContextPath() + "/ItemDonatedServlet?action=loadLocations");
+
+				/*
+				 * request.getRequestDispatcher("/bonusActivity.jsp").forward(request,
+				 * response);
+				 */				break;
 			case "CONSUMER":
 				System.out.println("Consumer role entered");
-				request.getRequestDispatcher("/consumer.jsp").forward(request, response);
-				break;
+				// En LoginServlet, después de la autenticación exitosa carga la lista de ubicaciones y redirige a funcionbonus
+				response.sendRedirect(request.getContextPath() + "/ItemDonatedServlet?action=loadLocations");
+
+				/*
+				 * request.getRequestDispatcher("/bonusActivity.jsp").forward(request,
+				 * response);
+				 */				break;
 			case "CHARITY":
 				System.out.println("Charity role entered");
-				request.getRequestDispatcher("/charity.jsp").forward(request, response);
-				break;
+				// En LoginServlet, después de la autenticación exitosa
+				response.sendRedirect(request.getContextPath() + "/ItemDonatedServlet?action=loadLocations");
+
+				/*
+				 * request.getRequestDispatcher("/bonusActivity.jsp").forward(request,
+				 * response);
+				 */				break;
 			default:
 				System.out.println("Error message = " + userValidate);
 				request.setAttribute("errMessage", userValidate);

@@ -1,4 +1,4 @@
-package bonusActivity;
+package main.algonquin.cst8288.FinalJavaProject.bonusActivity;
 
 public class ItemDonated {
 
@@ -59,5 +59,6 @@ public class ItemDonated {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
     
 }
