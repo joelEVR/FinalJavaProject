@@ -81,7 +81,7 @@ public class ItemDonatedServlet extends HttpServlet {
             Connection con = DBConnection.getConnection();
             ItemDonatedDAO dao = new ItemDonatedDAO(con);
             if (dao.updateItemDonated(item)) {
-                response.sendRedirect("itemDetails.jsp?itemId=" + item.getItemId()); // Redirigir al usuario a la página de detalles
+                response.sendRedirect("ItemDonatedServlet?action=loadUserItems"); 
             } else {
                 throw new Exception("Error al actualizar el ítem.");
             }

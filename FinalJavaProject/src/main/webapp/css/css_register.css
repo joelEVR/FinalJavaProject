@@ -109,6 +109,10 @@ input[type='reset']  {
 .form input[type='password'],
 .form input[type='text'],
 .form input[type='email'],
+.form input[type='number'], 
+.form input[type='date'], 
+.form select,
+.form textarea,
 .form input[type='submit'],
 .form input[type='reset'] {
     width: 100%;
@@ -134,18 +138,21 @@ input[type='reset']  {
     color: #eee;
 }
 
-.register label,
-.register input[type='text'],
-.register input[type='password'],
-.register input[type='email'],
-.register input[type='submit'],
-.register input[type='reset'] {
+.form label,
+.form input[type='text'],
+.form input[type='password'],
+.form input[type='email'],
+.form input[type='number'],
+.form input[type='date'],
+.form select,
+.form input[type='submit'],
+.form input[type='reset'] {
     border-radius: 0.25rem;
     padding: 16px;
     /*padding: 1rem;*/
 }
 
-.register label {
+.form label {
     background-color: #363b41;
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
@@ -155,35 +162,60 @@ input[type='reset']  {
     /*padding-right: 1.25rem;*/
 }
 
-.register input[type='password'],
-.register input[type='text'],
-.register input[type='email'] {
+.form textarea {
+    background-color: #3b4148;
+    border: none;
+    color: inherit;
+    font: inherit;
+    padding: 16px;
+    border-radius: 0.25rem;
+    width: 100%;
+}
+
+.form input[type='password'],
+.form input[type='text'],
+.form input[type='email'],
+.form input[type='number'],
+.form select,
+.form input[type='date'],
+.form input[type='email'] {
     background-color: #3b4148;
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
 }
 
-.register input[type='password']:focus,
-.register input[type='password']:hover,
-.register input[type='text']:focus,
-.register input[type='text']:hover,
-.register input[type='email']:focus,
-.register input[type='email']:hover {
+.form input[type='password']:focus,
+.form input[type='password']:hover,
+.form input[type='text']:focus,
+.form input[type='text']:hover,
+.form input[type='email']:focus,
+.form input[type='email']:hover,
+.form input[type='number']:focus,
+.form input[type='number']:hover,
+select:focus,
+select:hover,
+.form input[type='date']:focus,
+.form input[type='date']:hover,
+
+.form select:focus,
+.form select:hover,
+.form textarea:focus,
+.form textarea:hover {
     background-color: #434a52;
 }
 
-.register input[type='submit'],
-.register input[type='reset'] {
+.form input[type='submit'],
+.form input[type='reset'] {
     background-color: #4ceaae;
     color: #eee;
     font-weight: 700;
     text-transform: uppercase;
 }
 
-.register input[type='submit']:focus,
-.register input[type='submit']:hover,
-.register input[type='reset']:focus,
-.register input[type='reset']:hover {
+.form input[type='submit']:focus,
+.form input[type='submit']:hover,
+.form input[type='reset']:focus,
+.form input[type='reset']:hover {
     background-color: #ea4c88;
     color: #eeeeee;;
 }
@@ -199,4 +231,11 @@ p {
 
 .text--center {
     text-align: center;
+}
+
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }

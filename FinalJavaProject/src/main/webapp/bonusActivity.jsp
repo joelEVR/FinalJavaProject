@@ -1,98 +1,87 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.List"%>
-<%@ page import="main.algonquin.cst8288.FinalJavaProject.bonusActivity.ItemDonated"%>
-
+<%@ page
+	import="main.algonquin.cst8288.FinalJavaProject.bonusActivity.ItemDonated"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="css/css_.css">
 <title>Welcome to the Donation Platform</title>
-<style>
-table {
-	width: 100%;
-	border-collapse: collapse;
-}
-
-th, td {
-	border: 1px solid black;
-	padding: 8px;
-	text-align: left;
-}
-
-th {
-	background-color: #f2f2f2;
-}
-</style>
 </head>
-<body>
+<body class="align">
+	<div class="grid">
+		<h2 class="text--center">Welcome to the Donation Platform</h2>
 
-	<h2>Welcome to the Donation Platform</h2>
+		<div class="form__field">
+			<a href="addItem.jsp" class="form__button">Add Item to Donate</a>
+		</div>
+		
+		<div class="form__field">
+			<a href="ItemDonatedServlet?action=loadUserItems" class="form__button">Edit
+				My Published Items</a>
+		</div>
 
-	<!-- Buttons to add and edit items -->
-	<div>
-		<a href="addItem.jsp"><button>Add Item to Donate</button></a>
-		<a href="ItemDonatedServlet?action=loadUserItems"><button>Edit My Published Items</button></a>
+
+		<h3 class="text--center">Locations</h3>
+		<form action="ItemDonatedServlet" method="get"
+			class="form select-location">
+			<input type="hidden" name="action" value="showItemsByLocation">
+			<div class="form__field">
+				<select name="location" class="form__input"
+					onchange="this.form.submit()">
+					<option>Select Location</option>
+					<%
+					List<String> locations = (List<String>) request.getAttribute("locationList");
+					if (locations != null) {
+						for (String location : locations) {
+					%>
+					<option value="<%=location%>"><%=location%></option>
+					<%
+					}
+					}
+					%>
+				</select>
+			</div>
+		</form>
+
+		<h3 class="text--center">Items at Selected Location</h3>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Title</th>
+					<th>Description</th>
+					<th>Quantity</th>
+					<th>Expiration Date</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				<%
+				List<ItemDonated> items = (List<ItemDonated>) request.getAttribute("itemsList");
+				if (items != null && !items.isEmpty()) {
+					for (ItemDonated item : items) {
+				%>
+				<tr>
+					<td><%=item.getTitle()%></td>
+					<td><%=item.getDescription()%></td>
+					<td><%=item.getQuantity()%></td>
+					<td><%=item.getExpirationDate()%></td>
+					<td><%=item.getStatus()%></td>
+				</tr>
+				<%
+				}
+				} else {
+				%>
+				<tr>
+					<td colspan="5">No items found for the selected location.</td>
+				</tr>
+				<%
+				}
+				%>
+			</tbody>
+		</table>
 	</div>
-
-	<!-- Table to display locations -->
-	<h3>Locations</h3>
-	
-	<!-- Lista desplegable para seleccionar ubicaciones -->
-    <form action="ItemDonatedServlet" method="get">
-        <input type="hidden" name="action" value="showItemsByLocation">
-        <select name="location" onchange="this.form.submit()">
-            <option>Select Location</option>
-            <% 
-            List<String> locations = (List<String>) request.getAttribute("locationList");
-            if (locations != null) {
-                for (String location : locations) {
-            %>
-                <option value="<%= location %>"><%= location %></option>
-            <% 
-                }
-            }
-            %>
-        </select>
-    </form>
-
-    <!-- Tabla para mostrar los ítems de la ubicación seleccionada -->
-    <h3>Items at Selected Location</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Quantity</th>
-                <th>Expiration Date</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% 
-            List<ItemDonated> items = (List<ItemDonated>) request.getAttribute("itemsList");
-            if (items != null && !items.isEmpty()) {
-                for (ItemDonated item : items) {
-            %>
-            <tr>
-                <td><%= item.getTitle() %></td>
-                <td><%= item.getDescription() %></td>
-                <td><%= item.getQuantity() %></td>
-                <td><%= item.getExpirationDate() %></td>
-                <td><%= item.getStatus() %></td>
-            </tr>
-            <% 
-                }
-            } else {
-            %>
-            <tr>
-                <td colspan="5">No items found for the selected location.</td>
-            </tr>
-            <% 
-            }
-            %>
-        </tbody>
-    </table>
 </body>
-
 </html>
