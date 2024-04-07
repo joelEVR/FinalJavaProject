@@ -45,7 +45,10 @@
 				</select>
 			</div>
 		</form>
-
+			</div>
+		
+			<div class="gridtable">
+		
 		<h3 class="text--center">Items at Selected Location</h3>
 		<table class="table">
 			<thead>
