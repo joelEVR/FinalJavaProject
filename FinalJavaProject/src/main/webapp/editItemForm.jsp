@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="css/css_register.css">
+<link rel="stylesheet" type="text/css" href="css/css_JoelVelasquez.css">
 <title>Edit Item Form</title>
 </head>
 <body class="align">

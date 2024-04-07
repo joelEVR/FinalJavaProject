@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="css/css_register.css">
+<link rel="stylesheet" type="text/css" href="css/css_JoelVelasquez.css">
 <title>Welcome to the Donation Platform</title>
 </head>
 <body class="align">

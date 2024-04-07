@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="css/css_register.css">
+<link rel="stylesheet" type="text/css" href="css/css_JoelVelasquez.css">
 <title>Add New Item</title>
 </head>
 <body class="align">
