@@ -10,6 +10,12 @@
 	<%
 	ItemDonated itemToEdit = (ItemDonated) request.getAttribute("itemToEdit");
 	%>
+	<p class="text--center">
+		<span style="color: red; text-transform: uppercase; font-weight: 500">
+			<%=(request.getAttribute("errorMessage") == null) ? "" : request.getAttribute("errorMessage")%>
+		</span>
+	</p>
+
 	<div class="grid">
 		<h2 class="text--center">Edit Item</h2>
 		<form action="ItemDonatedServlet" method="post" class="form register">

@@ -29,6 +29,9 @@
 					<th>Description</th>
 					<th>Quantity</th>
 					<th>Location</th>
+					<th>Expiration Date</th>
+					<th>Status</th>					
+
 					<th>Actions</th>
 				</tr>
 			</thead>
@@ -43,6 +46,9 @@
 					<td><%=item.getDescription()%></td>
 					<td><%=item.getQuantity()%></td>
 					<td><%=item.getPickupLocation()%></td>
+					<td><%=item.getExpirationDate()%></td>
+					<td><%=item.getStatus()%></td>
+
 					<td class="td-center">
 						<div class="icon-container">
 							<a
