@@ -8,6 +8,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import main.algonquin.cst8288.FinalJavaProject.loginregister.DBConnection;
 
 public class ItemDonatedServlet extends HttpServlet {
@@ -27,8 +28,27 @@ public class ItemDonatedServlet extends HttpServlet {
                 deleteItem(request, response);
                 break;
             default:
-                response.sendRedirect("error.jsp"); // Página de error si la acción no se reconoce
+                response.sendRedirect("error.jsp");
                 break;
+        }
+    }
+    
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String action = request.getParameter("action");
+        if ("loadLocations".equals(action)) {
+            extractUniqueLocation(request, response);
+        } else if ("showItemsByLocation".equals(action)) {
+            showItemsByLocation(request, response);
+        } else if ("loadUserItems".equals(action)) {
+            loadUserItems(request, response);
+        } else if ("delete".equals(action)) { // Asegúrate de manejar la acción "delete" aquí
+            deleteItem(request, response);
+        } else if ("edit".equals(action)) { // Asegúrate de manejar la acción "delete" aquí
+        	editItem(request, response);
+        } else {
+            response.sendRedirect("error.jsp"); // Manejar otras acciones/parámetros GET aquí.
         }
     }
 
@@ -70,6 +90,25 @@ public class ItemDonatedServlet extends HttpServlet {
             response.sendRedirect("error.jsp");
         }
     }
+    
+    private void editItem(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int itemId = Integer.parseInt(request.getParameter("itemId"));
+        try {
+            Connection con = DBConnection.getConnection();
+            ItemDonatedDAO dao = new ItemDonatedDAO(con);
+            ItemDonated item = dao.getItemById(itemId);
+            if (item != null) {
+                request.setAttribute("itemToEdit", item);
+                request.getRequestDispatcher("/editItemForm.jsp").forward(request, response);
+            } else {
+                response.sendRedirect("error.jsp"); // O manejar de otra manera
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect("error.jsp");
+        }
+    }
+
 
     private void deleteItem(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -80,7 +119,7 @@ public class ItemDonatedServlet extends HttpServlet {
             Connection con = DBConnection.getConnection();
             ItemDonatedDAO dao = new ItemDonatedDAO(con);
             if (dao.deleteItemDonated(itemId, userId)) {
-                response.sendRedirect("itemsList.jsp");
+                response.sendRedirect("ItemDonatedServlet?action=loadUserItems");
             } else {
                 throw new Exception("Error al eliminar el ítem.");
             }
@@ -103,34 +142,7 @@ public class ItemDonatedServlet extends HttpServlet {
         item.setStatus(request.getParameter("status"));
         return item;
     }
-    
-    
-	/*
-	 * @Override protected void doGet(HttpServletRequest request,
-	 * HttpServletResponse response) throws ServletException, IOException { // Llama
-	 * a extractUniqueLocation directamente desde doGet para manejar solicitudes GET
-	 * específicamente. // Esto asegura que el método se ejecute cuando se acceda al
-	 * servlet mediante una solicitud GET. String action =
-	 * request.getParameter("action"); if ("loadLocations".equals(action)) {
-	 * extractUniqueLocation(request, response); } else { // Manejar otras acciones
-	 * GET o redirigir a una página de error o página principal si es necesario.
-	 * response.sendRedirect("error.jsp"); // O manejar otras acciones/parámetros
-	 * GET aquí. } }
-	 */
-    
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String action = request.getParameter("action");
-        if ("loadLocations".equals(action)) {
-            extractUniqueLocation(request, response);
-        } else if ("showItemsByLocation".equals(action)) {
-            showItemsByLocation(request, response);
-        } else {
-            response.sendRedirect("error.jsp"); // Manejar otras acciones/parámetros GET aquí.
-        }
-    }
-    
+        
     protected void extractUniqueLocation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             Connection con = DBConnection.getConnection();
@@ -169,6 +181,28 @@ public class ItemDonatedServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect("error.jsp");
+        }
+    }
+    
+    
+    protected void loadUserItems(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false); // Recuperar la sesión actual sin crear una nueva
+        if (session != null && session.getAttribute("userId") != null) {
+            int userId = (Integer) session.getAttribute("userId"); // Asumiendo que ya has almacenado userId en la sesión
+
+            try {
+                Connection con = DBConnection.getConnection();
+                ItemDonatedDAO dao = new ItemDonatedDAO(con);
+                List<ItemDonated> userItems = dao.getItemsByUserId(userId);
+                request.setAttribute("userItems", userItems);
+                request.getRequestDispatcher("/editMyItems.jsp").forward(request, response);
+            } catch (Exception e) {
+                e.printStackTrace();
+                response.sendRedirect("error.jsp");
+            }
+        } else {
+            // Si no hay sesión o userId no está en la sesión, redirigir al usuario para iniciar sesión
+            response.sendRedirect("login.jsp");
         }
     }
 }

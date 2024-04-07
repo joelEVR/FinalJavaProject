@@ -105,4 +105,54 @@ public class ItemDonatedDAO {
 		}
 		return items;
 	}
+	
+	public List<ItemDonated> getItemsByUserId(int userId) {
+	    List<ItemDonated> items = new ArrayList<>();
+	    String query = "SELECT * FROM FoodItemsForExchange WHERE UserId = ?";
+	    try (PreparedStatement ps = con.prepareStatement(query)) {
+	        ps.setInt(1, userId);
+	        ResultSet rs = ps.executeQuery();
+	        while (rs.next()) {
+	            ItemDonated item = new ItemDonated();
+	            item.setItemId(rs.getInt("ItemId"));
+	            item.setUserId(rs.getInt("UserId"));
+	            item.setTitle(rs.getString("Title"));
+	            item.setDescription(rs.getString("Description"));
+	            item.setQuantity(rs.getInt("Quantity"));
+	            item.setPickupLocation(rs.getString("PickupLocation"));
+	            item.setExpirationDate(rs.getString("ExpirationDate"));
+	            item.setStatus(rs.getString("Status"));
+	            items.add(item);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return items;
+	}
+	
+	public ItemDonated getItemById(int itemId) {
+	    String query = "SELECT * FROM FoodItemsForExchange WHERE ItemId = ?";
+	    try (PreparedStatement ps = con.prepareStatement(query)) {
+	        ps.setInt(1, itemId);
+	        try (ResultSet rs = ps.executeQuery()) {
+	            if (rs.next()) {
+	                ItemDonated item = new ItemDonated();
+	                item.setItemId(rs.getInt("ItemId"));
+	                item.setUserId(rs.getInt("UserId"));
+	                item.setTitle(rs.getString("Title"));
+	                item.setDescription(rs.getString("Description"));
+	                item.setQuantity(rs.getInt("Quantity"));
+	                item.setPickupLocation(rs.getString("PickupLocation"));
+	                item.setExpirationDate(rs.getString("ExpirationDate"));
+	                item.setStatus(rs.getString("Status"));
+	                return item;
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return null; // Or throw an exception
+	}
+
 }
+

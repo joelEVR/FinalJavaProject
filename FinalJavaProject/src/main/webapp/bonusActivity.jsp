@@ -31,49 +31,12 @@ th {
 
 	<!-- Buttons to add and edit items -->
 	<div>
-		<a href="addItem.jsp"><button>Add Item to Donate</button></a> <a
-			href="editMyItems.jsp"><button>Edit My Published Items</button></a>
+		<a href="addItem.jsp"><button>Add Item to Donate</button></a>
+		<a href="ItemDonatedServlet?action=loadUserItems"><button>Edit My Published Items</button></a>
 	</div>
 
 	<!-- Table to display locations -->
 	<h3>Locations</h3>
-	<%-- <%
-	List<String> locations = (List<String>) request.getAttribute("locationList");
-	if (locations != null) {
-		out.println("Locations list size in JSP: " + locations.size()); // Debugging line in JSP
-		for (String location : locations) {
-	%>
-	<tr>
-		<td><%=location%></td>
-	</tr>
-	<%
-	}
-	} else {
-	out.println("Locations list is null in JSP."); // Debugging line in JSP
-	}
-	%> --%>
-	<%-- <table>
-		<thead>
-			<tr>
-				<th>Location</th>
-			</tr>
-		</thead>
-		<tbody>
-			<%
-			List<String> locations = (List<String>) request.getAttribute("locationList");
-			if (locations != null) {
-				for (String location : locations) {
-			%>
-			<tr>
-				<td><%=location%></td>
-			</tr>
-			<%
-			}
-			}
-			%>
-		</tbody>
-
-	</table> --%>
 	
 	<!-- Lista desplegable para seleccionar ubicaciones -->
     <form action="ItemDonatedServlet" method="get">
