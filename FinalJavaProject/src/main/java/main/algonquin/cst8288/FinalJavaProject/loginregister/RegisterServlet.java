@@ -13,17 +13,21 @@ public class RegisterServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Copying all the input parameters in to local variables
+
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String userType = request.getParameter("userType"); // Get userType from the request
-
+        String notification = request.getParameter("notificaiton");
         User user = new User();
+
+      
         user.setName(name);
         user.setEmail(email);
         user.setPassword(password);
         user.setUserType(userType); // Set userType for the user
-
+        user.setNotification(notification);
+             
         RegisterDao registerDao = new RegisterDao();
 
             //insert user data in to the database.

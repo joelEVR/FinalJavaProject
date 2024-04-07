@@ -19,8 +19,10 @@ public class LoginDao {
 
         try {
             con = DBConnection.getConnection();
-            String query = "SELECT userId, email, password, userType FROM users WHERE email = ?";
-            preparedStatement = con.prepareStatement(query);
+
+            String query = "SELECT userId, email, password, userType, notification FROM users WHERE email = ?";
+
+          preparedStatement = con.prepareStatement(query);
             preparedStatement.setString(1, email);
             resultSet = preparedStatement.executeQuery();
 
@@ -29,6 +31,7 @@ public class LoginDao {
                 String passwordDB = resultSet.getString("password");
                 String roleDB = resultSet.getString("userType");
                 int userIdDB = resultSet.getInt("userID");
+                Boolean notification = resultSet.getBoolean("notification");
 
                 if (email.equals(emailDB) && BCrypt.checkpw(password, passwordDB)) {
                     User user = new User();
