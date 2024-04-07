@@ -33,13 +33,13 @@ public class LoginServlet extends HttpServlet {
 				HttpSession session = request.getSession();
 				session.setMaxInactiveInterval(10 * 60);
 				session.setAttribute("User", user.getUsername()); // Guarda el nombre de usuario en la sesión
-				session.setAttribute("userId", user.getUserId());
+				session.setAttribute("userId", user.getUserID());
 
 				switch (user.getUserType()) {
 				case "RETAILER":
 					System.out.println("Retailer role entered");
 					// En LoginServlet, después de la autenticación exitosa
-					response.sendRedirect(request.getContextPath() + "/ItemDonatedServlet?action=loadLocations");
+					response.sendRedirect(request.getContextPath() + "retailor.jsp");
 
 					/*
 					 * request.getRequestDispatcher("/bonusActivity.jsp").forward(request,
@@ -49,7 +49,7 @@ public class LoginServlet extends HttpServlet {
 					System.out.println("Consumer role entered");
 					// En LoginServlet, después de la autenticación exitosa carga la lista de
 					// ubicaciones y redirige a funcionbonus
-					response.sendRedirect(request.getContextPath() + "/ItemDonatedServlet?action=loadLocations");
+					response.sendRedirect(request.getContextPath() + "consumer.jsp");
 
 					/*
 					 * request.getRequestDispatcher("/bonusActivity.jsp").forward(request,
@@ -58,7 +58,7 @@ public class LoginServlet extends HttpServlet {
 				case "CHARITY":
 					System.out.println("Charity role entered");
 					// En LoginServlet, después de la autenticación exitosa
-					response.sendRedirect(request.getContextPath() + "/ItemDonatedServlet?action=loadLocations");
+					response.sendRedirect(request.getContextPath() + "charity.jsp");
 
 					/*
 					 * request.getRequestDispatcher("/bonusActivity.jsp").forward(request,

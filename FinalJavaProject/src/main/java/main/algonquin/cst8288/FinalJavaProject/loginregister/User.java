@@ -3,25 +3,48 @@ package main.algonquin.cst8288.FinalJavaProject.loginregister;
 public class User {
 
 	private int userID;
-    private String name;
     private String username;
     private String email;
     private String password;
     private String userType;
+    private String location;
+    private boolean notification;
 
     public User() {
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public String getLocation() {
+		return location;
+	}
 
 
-    public String getUsername() {
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+
+	public int getUserID() {
+		return userID;
+	}
+
+
+	public void setUserID(int userID) {
+		this.userID = userID;
+	}
+
+
+	public boolean getNotification() {
+		return notification;
+	}
+
+
+	public void setNotification(boolean notification) {
+		this.notification = notification;
+	}
+
+
+	public String getUsername() {
         return username;
     }
 
@@ -53,11 +76,4 @@ public class User {
         this.userType = userType;
     }
 
-	public int getUserId() {
-		return userID;
-	}
-
-	public void setUserId(int userID) {
-		this.userID = userID;
-	}
 }
