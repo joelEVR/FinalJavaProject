@@ -10,7 +10,6 @@
 	function validate() {
 		var name = document.form.name.value;
 		var email = document.form.email.value;
-		var username = document.form.username.value;
 		var password = document.form.password.value;
 		var conpassword = document.form.conpassword.value;
 		var userType = document.form.userType.value;
@@ -19,9 +18,6 @@
 			return false;
 		} else if (email == null || email === "") {
 			alert("Email can't be blank");
-			return false;
-		} else if (username == null || username === "") {
-			alert("Username can't be blank");
 			return false;
 		} else if (password.length < 6) {
 			alert("Password must be at least 6 characters long.");
@@ -55,14 +51,6 @@
 					height="20px" alt="email_logo"> <span class="hidden">E-mail</span>
 				</label> <input id="email" type="email" name="email" class="form__input"
 					placeholder="E-mail" required>
-			</div>
-
-			<div class="form__field">
-				<label for="username"> <img src="svg/username.svg"
-					width="20px" height="20px" alt="username_logo"> <span
-					class="hidden">Username</span>
-				</label> <input id="username" type="text" name="username"
-					class="form__input" placeholder="Username" required>
 			</div>
 
 			<div class="form__field">

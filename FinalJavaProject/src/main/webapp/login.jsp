@@ -16,8 +16,8 @@
 			<div class="form__field">
 				<label for="login__username"> <img src="svg/username.svg"
 					width="20px" height="20px" alt="profile_logo"> <span
-					class="hidden">Username</span>
-				</label> <input id="login__username" type="text" name="username"
+					class="hidden">Email</span>
+				</label> <input id="login__email" type="text" name="email"
 					class="form__input" placeholder="Username" required>
 			</div>
 

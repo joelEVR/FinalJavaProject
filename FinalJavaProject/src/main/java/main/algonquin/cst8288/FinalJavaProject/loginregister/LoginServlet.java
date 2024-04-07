@@ -17,11 +17,11 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String userName = request.getParameter("username");
+		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 
 		LoginUser loginUser = new LoginUser();
-		loginUser.setUserName(userName);
+		loginUser.setEmail(email);
 		loginUser.setPassword(password);
 
 		LoginDao loginDao = new LoginDao();
@@ -32,7 +32,7 @@ public class LoginServlet extends HttpServlet {
 			if (user != null) {
 				HttpSession session = request.getSession();
 				session.setMaxInactiveInterval(10 * 60);
-				session.setAttribute("User", user.getUsername()); // Guarda el nombre de usuario en la sesión
+				session.setAttribute("email", user.getEmail()); // Guarda el nombre de usuario en la sesión
 				session.setAttribute("userId", user.getUserId());
 
 				switch (user.getUserType()) {
