@@ -17,8 +17,7 @@ public class ItemDonatedDAO {
 	}
 
 	public boolean addItemDonated(ItemDonated ItemDonated) {
-
-		String query = "INSERT INTO FoodItemsForExchange (UserId, Title, Description, Quantity, PickupLocation, ExpirationDate, Status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		String query = "INSERT INTO FoodItemsForExchange (UserId, Title, Description, Quantity, PickupLocation, ExpirationDate, Status) VALUES (?, ?, ?, ?, ?, ?, 'available')";
 
 		try (PreparedStatement ps = con.prepareStatement(query)) {
 			ps.setInt(1, ItemDonated.getUserId());
@@ -27,7 +26,6 @@ public class ItemDonatedDAO {
 			ps.setInt(4, ItemDonated.getQuantity());
 			ps.setString(5, ItemDonated.getPickupLocation());
 			ps.setString(6, ItemDonated.getExpirationDate());
-			ps.setString(7, ItemDonated.getStatus());
 			ps.executeUpdate();
 			return true;
 		} catch (SQLException e) {
@@ -90,69 +88,69 @@ public class ItemDonatedDAO {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				ItemDonated item = new ItemDonated();
-	            item.setItemId(rs.getInt("ItemId")); // Asume que tienes un campo ItemId en tu tabla
-	            item.setUserId(rs.getInt("UserId")); // Asume que tienes un campo UserId en tu tabla
-	            item.setTitle(rs.getString("Title"));
-	            item.setDescription(rs.getString("Description"));
-	            item.setQuantity(rs.getInt("Quantity"));
-	            item.setPickupLocation(rs.getString("PickupLocation"));
-	            item.setExpirationDate(rs.getString("ExpirationDate")); // Asegúrate de que este formato coincida con tu JSP
-	            item.setStatus(rs.getString("Status"));
-	            items.add(item);
+				item.setItemId(rs.getInt("ItemId")); // Asume que tienes un campo ItemId en tu tabla
+				item.setUserId(rs.getInt("UserId")); // Asume que tienes un campo UserId en tu tabla
+				item.setTitle(rs.getString("Title"));
+				item.setDescription(rs.getString("Description"));
+				item.setQuantity(rs.getInt("Quantity"));
+				item.setPickupLocation(rs.getString("PickupLocation"));
+				item.setExpirationDate(rs.getString("ExpirationDate")); // Asegúrate de que este formato coincida con tu
+																		// JSP
+				item.setStatus(rs.getString("Status"));
+				items.add(item);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return items;
 	}
-	
+
 	public List<ItemDonated> getItemsByUserId(int userId) {
-	    List<ItemDonated> items = new ArrayList<>();
-	    String query = "SELECT * FROM FoodItemsForExchange WHERE UserId = ?";
-	    try (PreparedStatement ps = con.prepareStatement(query)) {
-	        ps.setInt(1, userId);
-	        ResultSet rs = ps.executeQuery();
-	        while (rs.next()) {
-	            ItemDonated item = new ItemDonated();
-	            item.setItemId(rs.getInt("ItemId"));
-	            item.setUserId(rs.getInt("UserId"));
-	            item.setTitle(rs.getString("Title"));
-	            item.setDescription(rs.getString("Description"));
-	            item.setQuantity(rs.getInt("Quantity"));
-	            item.setPickupLocation(rs.getString("PickupLocation"));
-	            item.setExpirationDate(rs.getString("ExpirationDate"));
-	            item.setStatus(rs.getString("Status"));
-	            items.add(item);
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-	    return items;
+		List<ItemDonated> items = new ArrayList<>();
+		String query = "SELECT * FROM FoodItemsForExchange WHERE UserId = ?";
+		try (PreparedStatement ps = con.prepareStatement(query)) {
+			ps.setInt(1, userId);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				ItemDonated item = new ItemDonated();
+				item.setItemId(rs.getInt("ItemId"));
+				item.setUserId(rs.getInt("UserId"));
+				item.setTitle(rs.getString("Title"));
+				item.setDescription(rs.getString("Description"));
+				item.setQuantity(rs.getInt("Quantity"));
+				item.setPickupLocation(rs.getString("PickupLocation"));
+				item.setExpirationDate(rs.getString("ExpirationDate"));
+				item.setStatus(rs.getString("Status"));
+				items.add(item);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return items;
 	}
-	
+
 	public ItemDonated getItemById(int itemId) {
-	    String query = "SELECT * FROM FoodItemsForExchange WHERE ItemId = ?";
-	    try (PreparedStatement ps = con.prepareStatement(query)) {
-	        ps.setInt(1, itemId);
-	        try (ResultSet rs = ps.executeQuery()) {
-	            if (rs.next()) {
-	                ItemDonated item = new ItemDonated();
-	                item.setItemId(rs.getInt("ItemId"));
-	                item.setUserId(rs.getInt("UserId"));
-	                item.setTitle(rs.getString("Title"));
-	                item.setDescription(rs.getString("Description"));
-	                item.setQuantity(rs.getInt("Quantity"));
-	                item.setPickupLocation(rs.getString("PickupLocation"));
-	                item.setExpirationDate(rs.getString("ExpirationDate"));
-	                item.setStatus(rs.getString("Status"));
-	                return item;
-	            }
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-	    return null; // Or throw an exception
+		String query = "SELECT * FROM FoodItemsForExchange WHERE ItemId = ?";
+		try (PreparedStatement ps = con.prepareStatement(query)) {
+			ps.setInt(1, itemId);
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					ItemDonated item = new ItemDonated();
+					item.setItemId(rs.getInt("ItemId"));
+					item.setUserId(rs.getInt("UserId"));
+					item.setTitle(rs.getString("Title"));
+					item.setDescription(rs.getString("Description"));
+					item.setQuantity(rs.getInt("Quantity"));
+					item.setPickupLocation(rs.getString("PickupLocation"));
+					item.setExpirationDate(rs.getString("ExpirationDate"));
+					item.setStatus(rs.getString("Status"));
+					return item;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null; // Or throw an exception
 	}
 
 }
-

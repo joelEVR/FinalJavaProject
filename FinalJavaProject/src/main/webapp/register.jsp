@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,8 +46,8 @@
 			<div class="form__field">
 				<label for="name"> <img src="svg/name.svg" width="20px"
 					height="20px" alt="name_logo"> <span class="hidden">Name</span>
-				</label> <input id="name" type="text" name="name"
-					class="form__input" placeholder="Your name" required>
+				</label> <input id="name" type="text" name="name" class="form__input"
+					placeholder="Your name" required>
 			</div>
 
 			<div class="form__field">

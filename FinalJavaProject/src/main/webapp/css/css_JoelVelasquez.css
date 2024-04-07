@@ -76,7 +76,6 @@ body {
     min-height: 100vh;
 }
 
-/* modules/anchor.css */
 
 a {
     color: #eee;
@@ -90,7 +89,6 @@ a:hover {
     color: #8fffd8;
 }
 
-/* modules/form.css */
 
 input {
     background-image: none;
@@ -152,7 +150,6 @@ input[type='reset'],
 {
     border-radius: 0.25rem;
     padding: 16px;
-    /*padding: 1rem;*/
 }
 
 .form label {
@@ -160,9 +157,7 @@ input[type='reset'],
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
     padding-left: 20px;
-    /*padding-left: 1.25rem;*/
     padding-right: 20px;
-    /*padding-right: 1.25rem;*/
 }
 
 .form textarea {
@@ -222,13 +217,10 @@ input[type='reset'],
     color: rgb(13, 11, 55);
 }
 
-/* modules/text.css */
 
 p {
     margin-bottom: 24px;
-    /*margin-bottom: 1.5rem;*/
     margin-top: 24px;
-    /*margin-top: 1.5rem;*/
 }
 
 .text--center {
@@ -236,8 +228,8 @@ p {
 }
 
 .form__button {
-    display: inline-block; /* Hace que el enlace se comporte más como un botón */
-    text-align: center; /* Asegura que el texto dentro del enlace esté centrado, útil para elementos de bloque */
+    display: inline-block; 
+    text-align: center; 
 }
 
 
@@ -248,32 +240,31 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .table {
-    width: 100%; /* Asegura que la tabla use todo el ancho disponible */
-    border-collapse: collapse; /* Elimina el espacio entre las celdas */
-    table-layout: fixed; /* Ayuda a evitar que el contenido dicte el ancho de la columna */
+    width: 100%; 
+    border-collapse: collapse; 
+    table-layout: fixed; 
 }
 
 .table th, .table td {
-    border: 1px solid #ddd; /* Agrega un ligero borde a cada celda */
-    text-align: left; /* Alinea el texto a la izquierda */
-    padding: 8px; /* Añade algo de espacio alrededor del texto en las celdas */
-    word-wrap: break-word; /* Asegura que las palabras largas no desborden la celda */
+    border: 1px solid #ddd; 
+    text-align: left; 
+    padding: 8px; 
+    word-wrap: break-word; 
 }
 
 .table th {
     background-color: #03b8d9;
-    color: rgb(13, 11, 55); /* Texto blanco para los encabezados */
+    color: rgb(13, 11, 55); 
 }
 
 .td-center .icon-container {
     display: flex;
-    justify-content: center; /* Centra los elementos horizontalmente */
-    align-items: center; /* Centra los elementos verticalmente si es necesario */
-    width: 100%; /* Asegura que el contenedor use todo el ancho disponible del td */
+    justify-content: center; 
+    align-items: center; 
+    width: 100%; 
 }
 
 .action-icon {
-    margin: 0 10px; /* Espacio entre iconos */
-    /* Resto de tus estilos .action-icon */
+    margin: 0 10px; 
 }
 

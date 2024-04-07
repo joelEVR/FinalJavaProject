@@ -70,6 +70,11 @@
 			<div class="form__field">
 				<input type="submit" value="Save Changes" class="form__button" />
 			</div>
+
+			<div class="form__field">
+				<a href="ItemDonatedServlet?action=loadLocations"
+					class="form__button">Come back to Look Items</a>
+			</div>
 		</form>
 	</div>
 </body>

@@ -65,13 +65,13 @@ public class LoginServlet extends HttpServlet {
 					 * response);
 					 */ break;
 				default:
-                    throw new IllegalStateException("Unexpected value: " + user.getUserType());
-                }
-				} else {
-					System.out.println("Error message");
-	                request.setAttribute("errMessage", "Invalid user credentials");
-					request.getRequestDispatcher("/login.jsp").forward(request, response);
+					throw new IllegalStateException("Unexpected value: " + user.getUserType());
 				}
+			} else {
+				System.out.println("Error message");
+				request.setAttribute("errMessage", "Invalid user credentials");
+				request.getRequestDispatcher("/login.jsp").forward(request, response);
+			}
 		}
 
 		catch (Exception e1) {

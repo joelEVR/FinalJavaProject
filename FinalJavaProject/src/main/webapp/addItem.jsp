@@ -48,18 +48,15 @@
 					class="form__input" placeholder="Expiration Date" required>
 
 			</div>
-			<div class="form__field">
-				<label for="status"><img src="svg/name.svg" width="20px"
-					height="20px" alt="status_logo"> <span class="hidden">Status</span></label>
-				<select id="status" name="status" class="form__input" required>
-					<option value="available">Available</option>
-					<option value="reserved">Reserved</option>
-					<option value="exchanged">Exchanged</option>
-				</select>
-			</div>
+
 			<div class="form__field">
 				<input type="submit" value="Add Item" />
 			</div>
+
+				<div class="form__field">
+					<a href="ItemDonatedServlet?action=loadLocations"
+						class="form__button">Come back to Look Items</a>
+				</div>
 		</form>
 	</div>
 
