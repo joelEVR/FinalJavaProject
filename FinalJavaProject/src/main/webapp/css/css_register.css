@@ -272,4 +272,15 @@ input[type="number"]::-webkit-outer-spin-button {
     color: rgb(13, 11, 55); /* Texto blanco para los encabezados */
 }
 
+.td-center .icon-container {
+    display: flex;
+    justify-content: center; /* Centra los elementos horizontalmente */
+    align-items: center; /* Centra los elementos verticalmente si es necesario */
+    width: 100%; /* Asegura que el contenedor use todo el ancho disponible del td */
+}
+
+.action-icon {
+    margin: 0 10px; /* Espacio entre iconos */
+    /* Resto de tus estilos .action-icon */
+}
 

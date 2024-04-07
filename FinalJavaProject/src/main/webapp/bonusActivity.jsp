@@ -17,10 +17,10 @@
 		<div class="form__field">
 			<a href="addItem.jsp" class="form__button">Add Item to Donate</a>
 		</div>
-		
+
 		<div class="form__field">
-			<a href="ItemDonatedServlet?action=loadUserItems" class="form__button">Edit
-				My Published Items</a>
+			<a href="ItemDonatedServlet?action=loadUserItems"
+				class="form__button">Edit My Published Items</a>
 		</div>
 
 
@@ -45,10 +45,10 @@
 				</select>
 			</div>
 		</form>
-			</div>
-		
-			<div class="gridtable">
-		
+	</div>
+
+	<div class="gridtable">
+
 		<h3 class="text--center">Items at Selected Location</h3>
 		<table class="table">
 			<thead>
