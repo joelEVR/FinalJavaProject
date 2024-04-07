@@ -11,8 +11,8 @@ public class RegisterDao {
 
     public String registerUser(User user) {
 
-        //String firstname = user.getName();
-        String name = user.getUsername();
+
+        String name = user.getName();
         String email = user.getEmail();
         String password = user.getPassword();
         String userType = user.getUserType();
@@ -23,17 +23,18 @@ public class RegisterDao {
 
         try {
             con = DBConnection.getConnection();
-            String query = "INSERT INTO users(userID, username, email, password, userType, notification) VALUES (null, ?, ?, ?, ?, ?)";
+
+            String query = "INSERT INTO users(userID, name, email, password, userType, notification) VALUES (null, ?, ?, ?, ?, ?)";
             preparedStatement = con.prepareStatement(query); //Making use of prepared statements to insert bunch of data
             
             String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt(12)); // Encriptar contraseña
             
-            //preparedStatement.setString(1, firstname);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, email);
             preparedStatement.setString(3, hashedPassword);
             preparedStatement.setString(4, userType);
             preparedStatement.setBoolean(5, notification);
+
 
             int i = preparedStatement.executeUpdate();
 

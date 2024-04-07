@@ -10,7 +10,7 @@ import org.mindrot.jbcrypt.BCrypt;
 public class LoginDao {
 
 	public User authenticateUser(LoginUser loginUser) {
-		String userName = loginUser.getUserName();
+		String email = loginUser.getEmail();
 		String password = loginUser.getPassword();
 
 		Connection con = null;
@@ -19,22 +19,24 @@ public class LoginDao {
 
         try {
             con = DBConnection.getConnection();
-            String query = "SELECT userId, username, password, userType, notification FROM users WHERE username = ?";
-            preparedStatement = con.prepareStatement(query);
-            preparedStatement.setString(1, userName);
+
+            String query = "SELECT userId, email, password, userType, notification FROM users WHERE email = ?";
+
+          preparedStatement = con.prepareStatement(query);
+            preparedStatement.setString(1, email);
             resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                String userNameDB = resultSet.getString("username");
+                String emailDB = resultSet.getString("email");
                 String passwordDB = resultSet.getString("password");
                 String roleDB = resultSet.getString("userType");
                 int userIdDB = resultSet.getInt("userID");
                 Boolean notification = resultSet.getBoolean("notification");
 
-                if (userName.equals(userNameDB) && BCrypt.checkpw(password, passwordDB)) {
+                if (email.equals(emailDB) && BCrypt.checkpw(password, passwordDB)) {
                     User user = new User();
-                    user.setUserID(userIdDB);
-                    user.setUsername(userNameDB);
+                    user.setUserId(userIdDB);
+                    user.setEmail(emailDB);
                     user.setUserType(roleDB);
                     return user; // Devuelve el usuario si la contraseña coincide
                 }

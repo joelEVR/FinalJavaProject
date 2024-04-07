@@ -11,31 +11,23 @@ public class RegisterServlet extends HttpServlet {
     public RegisterServlet() {
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response, boolean True, boolean False) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Copying all the input parameters in to local variables
-       // String name = request.getParameter("name");
-        String username = request.getParameter("username");
+
+        String name = request.getParameter("name");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String userType = request.getParameter("userType"); // Get userType from the request
         String notification = request.getParameter("notificaiton");
         User user = new User();
-        boolean value = False;
-        
-        //user.setName(name);
-        user.setUsername(username);
+
+      
+        user.setName(name);
         user.setEmail(email);
         user.setPassword(password);
         user.setUserType(userType); // Set userType for the user
-        
-        if(notification == "1") {
-        	value = True;
-             user.setNotification(value);
-             }else {
-        user.setNotification(value);
-             }
-        
-
+        user.setNotification(notification);
+             
         RegisterDao registerDao = new RegisterDao();
 
             //insert user data in to the database.
