@@ -14,6 +14,13 @@
 		<form action="ItemDonatedServlet" method="post" class="form register">
 			<input type="hidden" name="action" value="add">
 
+			<p class="text--center">
+				<span
+					style="color: red; text-transform: uppercase; font-weight: 500">
+					<%=(request.getAttribute("errorMessage") == null) ? "" : request.getAttribute("errorMessage")%>
+				</span>
+			</p>
+
 			<div class="form__field">
 				<label for="title"><img src="svg/name.svg" width="20px"
 					height="20px" alt="item_logo"> <span class="hidden">Title</span></label>
@@ -53,10 +60,11 @@
 				<input type="submit" value="Add Item" />
 			</div>
 
-				<div class="form__field">
-					<a href="ItemDonatedServlet?action=loadLocations"
-						class="form__button">Come back to Look Items</a>
-				</div>
+			<div class="form__field">
+				<a href="ItemDonatedServlet?action=loadLocations"
+					class="form__button">Come back to Look Items</a>
+			</div>
+
 		</form>
 	</div>
 

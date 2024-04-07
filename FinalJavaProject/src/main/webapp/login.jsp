@@ -41,7 +41,7 @@
 		</form>
 
 		<p class="text--center">
-			Not a member? <a href="register.jsp">Register now ?</a>
+			Not a member? <a href="register.jsp">    Register now</a>
 		</p>
 
 	</div>

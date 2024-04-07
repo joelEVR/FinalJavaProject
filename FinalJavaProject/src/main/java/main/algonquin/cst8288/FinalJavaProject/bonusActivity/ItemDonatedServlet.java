@@ -2,6 +2,7 @@ package main.algonquin.cst8288.FinalJavaProject.bonusActivity;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.time.LocalDate;
 import java.util.List;
 
 import jakarta.servlet.ServletException;
@@ -53,45 +54,75 @@ public class ItemDonatedServlet extends HttpServlet {
 	}
 
 	private void addItem(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// Crear instancia de ItemDonated y establecer sus propiedades desde los
-		// parámetros de la solicitud
-		ItemDonated item = extractItemFromRequest(request);
-		// Por defecto, el itemId será 0 para nuevos ítems, esto debería manejarse en el
-		// DAO para asignar un nuevo ID
-		try {
-			Connection con = DBConnection.getConnection();
-			ItemDonatedDAO dao = new ItemDonatedDAO(con);
-			if (dao.addItemDonated(item)) {
-				response.sendRedirect(request.getContextPath() + "/ItemDonatedServlet?action=loadLocations");
-			} else {
-				throw new Exception("Error al agregar el ítem.");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			response.sendRedirect("error.jsp");
-		}
+	        throws ServletException, IOException {
+	    // Crear instancia de ItemDonated y establecer sus propiedades desde los parámetros de la solicitud
+	    ItemDonated item = extractItemFromRequest(request);
+
+	    // Validación de la cantidad
+	    if (item.getQuantity() < 1) {
+	        request.setAttribute("errorMessage", "Quantity must be at least 1.");
+	        request.getRequestDispatcher("/addItem.jsp").forward(request, response);
+	        return;
+	    }
+
+	    // Validación de la fecha
+	    LocalDate expirationDate = LocalDate.parse(item.getExpirationDate());
+	    if (expirationDate.isBefore(LocalDate.now())) {
+	        request.setAttribute("errorMessage", "Expiration date must be in the future.");
+	        request.getRequestDispatcher("/addItem.jsp").forward(request, response);
+	        return;
+	    }
+
+	    try {
+	        Connection con = DBConnection.getConnection();
+	        ItemDonatedDAO dao = new ItemDonatedDAO(con);
+	        if (dao.addItemDonated(item)) {
+	            response.sendRedirect(request.getContextPath() + "/ItemDonatedServlet?action=loadUserItems");
+	        } else {
+	            throw new Exception("Error adding the item.");
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        response.sendRedirect("addItem.jsp");
+	    }
 	}
 
 	private void updateItem(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// Similar a addItem, pero llama a dao.updateItemDonated()
-		ItemDonated item = extractItemFromRequest(request);
-		item.setItemId(Integer.parseInt(request.getParameter("itemId"))); // Establecer itemId para la actualización
+	        throws ServletException, IOException {
+	    ItemDonated item = extractItemFromRequest(request);
+	    item.setItemId(Integer.parseInt(request.getParameter("itemId"))); // Asegúrate de obtener el itemId correctamente
 
-		try {
-			Connection con = DBConnection.getConnection();
-			ItemDonatedDAO dao = new ItemDonatedDAO(con);
-			if (dao.updateItemDonated(item)) {
-				response.sendRedirect("ItemDonatedServlet?action=loadUserItems");
-			} else {
-				throw new Exception("Error al actualizar el ítem.");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			response.sendRedirect("error.jsp");
-		}
+	    // Validación de la cantidad
+	    if (item.getQuantity() < 1) {
+	        request.setAttribute("errorMessage", "Quantity must be at least 1.");
+	        request.setAttribute("itemToEdit", item); // Devuelve el ítem al formulario para que el usuario no tenga que rellenar todo de nuevo
+	        request.getRequestDispatcher("/editItemForm.jsp").forward(request, response);
+	        return;
+	    }
+
+	    // Validación de la fecha
+	    LocalDate expirationDate = LocalDate.parse(item.getExpirationDate());
+	    if (expirationDate.isBefore(LocalDate.now())) {
+	        request.setAttribute("errorMessage", "Expiration date must be in the future.");
+	        request.setAttribute("itemToEdit", item); // Devuelve el ítem al formulario
+	        request.getRequestDispatcher("/editItemForm.jsp").forward(request, response);
+	        return;
+	    }
+
+	    try {
+	        Connection con = DBConnection.getConnection();
+	        ItemDonatedDAO dao = new ItemDonatedDAO(con);
+	        if (dao.updateItemDonated(item)) {
+	            response.sendRedirect("ItemDonatedServlet?action=loadUserItems");
+	        } else {
+	            throw new Exception("Error updating the item.");
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        response.sendRedirect("editItemForm.jsp"); // Considera manejar este caso de manera más específica
+	    }
 	}
+
 
 	private void editItem(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
