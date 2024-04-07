@@ -64,7 +64,6 @@
 				<a href="ItemDonatedServlet?action=loadLocations"
 					class="form__button">Come back to Look Items</a>
 			</div>
-
 		</form>
 	</div>
 

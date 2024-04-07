@@ -31,6 +31,7 @@
 					<th>Location</th>
 					<th>Expiration Date</th>
 					<th>Status</th>					
+
 					<th>Actions</th>
 				</tr>
 			</thead>
@@ -47,6 +48,7 @@
 					<td><%=item.getPickupLocation()%></td>
 					<td><%=item.getExpirationDate()%></td>
 					<td><%=item.getStatus()%></td>
+
 					<td class="td-center">
 						<div class="icon-container">
 							<a

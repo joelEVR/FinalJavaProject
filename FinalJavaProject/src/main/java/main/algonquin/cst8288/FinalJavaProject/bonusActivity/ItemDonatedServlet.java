@@ -123,7 +123,6 @@ public class ItemDonatedServlet extends HttpServlet {
 	    }
 	}
 
-
 	private void editItem(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		int itemId = Integer.parseInt(request.getParameter("itemId"));
