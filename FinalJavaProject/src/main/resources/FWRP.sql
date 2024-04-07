@@ -5,72 +5,42 @@ USE FWRP;
 CREATE TABLE users (
   userID INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(120) NOT NULL,
-  username VARCHAR(30) NOT NULL,
-  email VARCHAR(30) NOT NULL,
+  email VARCHAR(30) UNIQUE NOT NULL,
   password VARCHAR(255) NOT NULL,
   userType varchar(120) NOT NULL,
-  Location VARCHAR(255)
+  Location VARCHAR(255),
+  notification BOOLEAN DEFAULT FALSE
 );
 
-INSERT INTO users (name, username, email, password, userType, Location) 
-VALUES ('Juan Pérez', 'juanperez', 'juan@example.com', 'password123', 'Regular', 'Ciudad de México');
+INSERT INTO users (name, email, password, userType, Location) 
+VALUES ('Juan Pérez', 'juan@example.com', 'password123', 'Regular', 'Ciudad de México');
 
-INSERT INTO users (name, username, email, password, userType, Location) 
-VALUES ('María García', 'mariagarcia', 'maria@example.com', 'securepass', 'Regular', 'Madrid, España');
+INSERT INTO users (name, email, password, userType, Location) 
+VALUES ('María García' , 'maria@example.com', 'securepass', 'Regular', 'Madrid, España');
 
-CREATE TABLE food_items (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    quantity INT NOT NULL,
+CREATE TABLE food (
+    foodid INT AUTO_INCREMENT PRIMARY KEY,
+    foodname VARCHAR(255) NOT NULL,
+    amount INT NOT NULL,
     expiration_date DATE NOT NULL,
-    retailer_id INT,
+    userid INT,
     status ENUM('AVAILABLE', 'CLAIMED', 'SOLD', 'SURPLUS') NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
-    average_daily_sales INT NOT NULL,
-    FOREIGN KEY (retailer_id) REFERENCES users(UserID)
-); 
+    discount DECIMAL(4, 2) NOT NULL,
+    foodLocation VARCHAR(255) NOT NULL,
+    subscription BOOLEAN DEFAULT FALSE, 
+    FOREIGN KEY (userid) REFERENCES users(userID) -- Changed to match the referenced column name
+);
 
-CREATE TABLE SurplusFoodItems ( 
-    SurplusFoodItemID INT PRIMARY KEY, 
-    ListingDate DATE, 
-    FOREIGN KEY (SurplusFoodItemID) REFERENCES food_Items(id) 
-); 
-  
-CREATE TABLE Claims ( 
-    ClaimID INT AUTO_INCREMENT PRIMARY KEY, 
-    CharityID INT, 
-    SurplusFoodItemID INT, 
-    ClaimDate DATE, 
-    FOREIGN KEY (CharityID) REFERENCES users(UserID), 
-    FOREIGN KEY (SurplusFoodItemID) REFERENCES SurplusFoodItems(SurplusFoodItemID) 
-); 
-  
-CREATE TABLE Purchases ( 
-    PurchaseID INT AUTO_INCREMENT PRIMARY KEY, 
-    ConsumerID INT, 
-    FoodItemID INT, 
-    PurchaseDate DATE, 
-    PurchasePrice DECIMAL(10, 2), 
-    FOREIGN KEY (ConsumerID) REFERENCES users(UserId), 
-    FOREIGN KEY (FoodItemID) REFERENCES food_Items(id) 
-); 
-  
-CREATE TABLE Subscriptions ( 
-    SubscriptionID INT AUTO_INCREMENT PRIMARY KEY, 
-    UserID INT, 
-    Location VARCHAR(255), 
-    Preferences TEXT, 
-    CommunicationMethod ENUM('Email', 'Phone'), 
-    FOREIGN KEY (UserID) REFERENCES Users(UserId) 
-); 
-  
-CREATE TABLE Notifications ( 
-    NotificationID INT AUTO_INCREMENT PRIMARY KEY, 
-    SubscriptionID INT, 
-    Message TEXT, 
-    NotificationDate DATE, 
-    FOREIGN KEY (SubscriptionID) REFERENCES Subscriptions(SubscriptionID) 
-); 
+INSERT INTO food (foodname, amount, expiration_date, userid, status, price, discount, foodLocation, subscription) 
+VALUES 
+('Apples', 50, '2024-04-30', 1, 'AVAILABLE', 10.99, 0.00, 'Supermarket A', FALSE),
+('Bananas', 100, '2024-05-10', 1, 'AVAILABLE', 5.99, 0.00, 'Farmers Market', FALSE),
+('Oranges', 75, '2024-04-25', 1, 'CLAIMED', 8.49, 0.10, 'Local Store', FALSE),
+('Carrots', 40, '2024-04-20', 1, 'SOLD', 6.79, 0.05, 'Grocery Store', FALSE),
+('Tomatoes', 60, '2024-05-05', 2, 'AVAILABLE', 12.99, 0.00, 'Farmers Market', FALSE),
+('Apples', 50, '2024-04-30', 2, 'SURPLUS', 10.99, 0.00, 'Supermarket A', FALSE),
+('Bananas', 100, '2024-05-10', 2, 'CLAIMED', 5.99, 0.00, 'Farmers Market', FALSE);
 
 CREATE TABLE FoodItemsForExchange (
     ItemId INT AUTO_INCREMENT PRIMARY KEY,
@@ -95,3 +65,4 @@ VALUES
 (2, 'Bananas', 'Bunch of ripe bananas', 6, '789 Central Avenue, City', '2024-05-18', 'available'),
 (2, 'Chicken Breasts', 'Frozen chicken breasts', 5, '456 New Street, City', '2024-06-20', 'available'),
 (2, 'Quinoa', 'Bags of quinoa', 12, '789 Central Avenue, City', '2024-06-05', 'available'),
+(2, 'Brown Rice', 'Bags of brown rice', 7, '123 Fake Street, City', '2024-05-28', 'available');
