@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="css/css_register.css">
+<link rel="stylesheet" type="text/css" href="css/css_JoelVelasquez.css">
 <title>Register</title>
 <script>
 	function validate() {
@@ -46,8 +46,8 @@
 			<div class="form__field">
 				<label for="name"> <img src="svg/name.svg" width="20px"
 					height="20px" alt="name_logo"> <span class="hidden">Name</span>
-				</label> <input id="name" type="text" name="name"
-					class="form__input" placeholder="Your name" required>
+				</label> <input id="name" type="text" name="name" class="form__input"
+					placeholder="Your name" required>
 			</div>
 
 			<div class="form__field">

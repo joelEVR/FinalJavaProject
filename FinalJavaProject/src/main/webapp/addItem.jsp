@@ -1,44 +1,64 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Add New Item</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="css/css_JoelVelasquez.css">
+<title>Add New Item</title>
 </head>
-<body>
-    <h2>Add New Item to Donate</h2>
-    <form action="ItemDonatedServlet" method="post">
-        <input type="hidden" name="action" value="add">
-        <div>
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title" required>
-        </div>
-        <div>
-            <label for="description">Description:</label>
-            <textarea id="description" name="description" required></textarea>
-        </div>
-        <div>
-            <label for="quantity">Quantity:</label>
-            <input type="number" id="quantity" name="quantity" required>
-        </div>
-        <div>
-            <label for="pickupLocation">Pickup Location:</label>
-            <input type="text" id="pickupLocation" name="pickupLocation" required>
-        </div>
-        <div>
-            <label for="expirationDate">Expiration Date:</label>
-            <input type="text" id="expirationDate" name="expirationDate" placeholder="YYYY-MM-DD" required>
-        </div>
-        <div>
-            <label for="status">Status:</label>
-            <select id="status" name="status" required>
-                <option value="available">Available</option>
-                <option value="reserved">Reserved</option>
-                <option value="exchanged">Exchanged</option>
-            </select>
-        </div>
-        <button type="submit">Add Item</button>
-    </form>
+<body class="align">
+
+	<div class="grid">
+		<h2 class="text--center">Add New Item to Donate</h2>
+		<form action="ItemDonatedServlet" method="post" class="form register">
+			<input type="hidden" name="action" value="add">
+
+			<div class="form__field">
+				<label for="title"><img src="svg/name.svg" width="20px"
+					height="20px" alt="item_logo"> <span class="hidden">Title</span></label>
+				<input type="text" id="title" name="title" class="form__input"
+					placeholder="Title" required>
+			</div>
+			<div class="form__field">
+				<label for="description"><img src="svg/name.svg"
+					width="20px" height="20px" alt="description_logo"> <span
+					class="hidden">Description</span></label>
+				<textarea id="description" name="description" class="form__input"
+					placeholder="Description" required></textarea>
+			</div>
+			<div class="form__field">
+				<label for="quantity"><img src="svg/name.svg" width="20px"
+					height="20px" alt="quantity_logo"> <span class="hidden">Quantity</span></label>
+				<input type="number" id="quantity" name="quantity"
+					class="form__input" placeholder="Quantity" required>
+			</div>
+			<div class="form__field">
+				<label for="pickupLocation"><img src="svg/name.svg"
+					width="20px" height="20px" alt="location_logo"> <span
+					class="hidden">Pickup Location</span></label> <input type="text"
+					id="pickupLocation" name="pickupLocation" class="form__input"
+					placeholder="Pickup Location" required>
+			</div>
+			<div class="form__field">
+				<label for="expirationDate"><img src="svg/name.svg"
+					width="20px" height="20px" alt="calendar_logo"> <span
+					class="hidden">Expiration Date (YYYY-MM-DD)</span></label> <input
+					type="date" id="expirationDate" name="expirationDate"
+					class="form__input" placeholder="Expiration Date" required>
+
+			</div>
+
+			<div class="form__field">
+				<input type="submit" value="Add Item" />
+			</div>
+
+				<div class="form__field">
+					<a href="ItemDonatedServlet?action=loadLocations"
+						class="form__button">Come back to Look Items</a>
+				</div>
+		</form>
+	</div>
+
 </body>
 </html>
