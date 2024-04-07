@@ -97,7 +97,8 @@ input {
 }
 
 input[type='submit'],
-input[type='reset']  {
+input[type='reset'],
+.form__button  {
     cursor: pointer;
 }
 
@@ -111,10 +112,10 @@ input[type='reset']  {
 .form input[type='email'],
 .form input[type='number'], 
 .form input[type='date'], 
-.form select,
 .form textarea,
 .form input[type='submit'],
-.form input[type='reset'] {
+.form input[type='reset'],
+.form__button {
     width: 100%;
 }
 
@@ -145,8 +146,10 @@ input[type='reset']  {
 .form input[type='number'],
 .form input[type='date'],
 .form select,
+.form__button,
 .form input[type='submit'],
-.form input[type='reset'] {
+.form input[type='reset']
+{
     border-radius: 0.25rem;
     padding: 16px;
     /*padding: 1rem;*/
@@ -176,7 +179,6 @@ input[type='reset']  {
 .form input[type='text'],
 .form input[type='email'],
 .form input[type='number'],
-.form select,
 .form input[type='date'],
 .form input[type='email'] {
     background-color: #3b4148;
@@ -192,20 +194,17 @@ input[type='reset']  {
 .form input[type='email']:hover,
 .form input[type='number']:focus,
 .form input[type='number']:hover,
-select:focus,
-select:hover,
 .form input[type='date']:focus,
 .form input[type='date']:hover,
 
-.form select:focus,
-.form select:hover,
 .form textarea:focus,
 .form textarea:hover {
     background-color: #434a52;
 }
 
 .form input[type='submit'],
-.form input[type='reset'] {
+.form input[type='reset'], 
+.form__button {
     background-color: #4ceaae;
     color: #eee;
     font-weight: 700;
@@ -215,7 +214,9 @@ select:hover,
 .form input[type='submit']:focus,
 .form input[type='submit']:hover,
 .form input[type='reset']:focus,
-.form input[type='reset']:hover {
+.form input[type='reset']:hover,
+.form__button:focus,
+.form__button:hover {
     background-color: #ea4c88;
     color: #eeeeee;;
 }
