@@ -4,7 +4,7 @@ public class User {
 
   	private int userId;
     private String name;
-    private String email;
+	private String email;
     private String password;
     private String userType;
     private String location;
@@ -12,14 +12,14 @@ public class User {
 
     public User() {
     }
-  
-   public int getUsername() {
-	    	return userName;
-	  }
+    
+    public String getName() {
+ 		return name;
+ 	}
 
-	  public void setUserName(int userName) {
-	    	this.userName = userName;
-	  } 
+ 	public void setName(String name) {
+ 		this.name = name;
+ 	}
   
     public String getEmail() {
         return email;

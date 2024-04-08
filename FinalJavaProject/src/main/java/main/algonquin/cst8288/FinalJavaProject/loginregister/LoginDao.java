@@ -38,6 +38,7 @@ public class LoginDao {
                     user.setUserId(userIdDB);
                     user.setEmail(emailDB);
                     user.setUserType(roleDB);
+                    user.setNotification(notification);
                     return user; // Devuelve el usuario si la contraseña coincide
                 }
             }
