@@ -16,9 +16,9 @@ public class DBConnection {
         if (connection == null) {
             synchronized (DBConnection.class) {
                 if (connection == null) {
-                    String url = "jdbc:mysql://localhost:3306/fwrp";
-                    String username = "username";
-                    String password = "username";
+                    String url = "jdbc:mysql://localhost:3305/fwrp";
+                    String username = "root";
+                    String password = "root";
                     try {
                         Class.forName("com.mysql.cj.jdbc.Driver");
                         connection = DriverManager.getConnection(url, username, password);

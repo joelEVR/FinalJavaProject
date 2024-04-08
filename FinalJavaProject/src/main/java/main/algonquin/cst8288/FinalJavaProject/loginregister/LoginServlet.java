@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
 				case "RETAILER":
 					System.out.println("Retailer role entered");
 					// En LoginServlet, después de la autenticación exitosa
-					response.sendRedirect(request.getContextPath() + "/ItemDonatedServlet?action=loadLocations");
+					response.sendRedirect(request.getContextPath() + "/retailor.jsp");
 
 					/*
 					 * request.getRequestDispatcher("/bonusActivity.jsp").forward(request,
