@@ -18,7 +18,7 @@ public class RegisterServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String userType = request.getParameter("userType"); // Get userType from the request
-        String notification = request.getParameter("notificaiton");
+        Boolean notification = Boolean.parseBoolean(request.getParameter("notification"));
         User user = new User();
 
       
@@ -27,7 +27,7 @@ public class RegisterServlet extends HttpServlet {
         user.setPassword(password);
         user.setUserType(userType); // Set userType for the user
         user.setNotification(notification);
-             
+
         RegisterDao registerDao = new RegisterDao();
 
             //insert user data in to the database.

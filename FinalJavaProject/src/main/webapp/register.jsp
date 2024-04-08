@@ -81,6 +81,12 @@
 				</select>
 			</div>
 
+			<div class="form__field">
+				<input id="notification" type="checkbox" name="notification"
+					class="form__input" value="true"> <label for="notification">Receive
+					Notifications?</label>
+			</div>
+
 
 			<div class="form__field">
 				<input type="submit" value="Register" />
@@ -89,6 +95,8 @@
 			<div class="form__field">
 				<input type="reset" value="Reset" />
 			</div>
+
+
 
 		</form>
 

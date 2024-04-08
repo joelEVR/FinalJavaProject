@@ -16,7 +16,8 @@ public class RegisterDao {
         String email = user.getEmail();
         String password = user.getPassword();
         String userType = user.getUserType();
-        Boolean notification = user.getNotification();
+        Boolean notification = user.isNotification();
+
 
         Connection con = null;
         PreparedStatement preparedStatement = null;
@@ -34,7 +35,6 @@ public class RegisterDao {
             preparedStatement.setString(3, hashedPassword);
             preparedStatement.setString(4, userType);
             preparedStatement.setBoolean(5, notification);
-
 
             int i = preparedStatement.executeUpdate();
 
