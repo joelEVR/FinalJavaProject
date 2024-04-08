@@ -2,11 +2,21 @@ package main.algonquin.cst8288.FinalJavaProject.loginregister;
 
 public class User {
 
-	private int userID;
+	private int userId;
     private String name;
     private String email;
     private String password;
     private String userType;
+    
+    public boolean isNotification() {
+		return notification;
+	}
+
+	public void setNotification(boolean notification) {
+		this.notification = notification;
+	}
+
+	boolean notification;
 
     public User() {
     }
@@ -44,10 +54,10 @@ public class User {
     }
 
 	public int getUserId() {
-		return userID;
+		return userId;
 	}
 
-	public void setUserId(int userID) {
-		this.userID = userID;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 }

@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
-import main.algonquin.cst8288.FinalJavaProject.loginregister.User;
 
 public class LoginServlet extends HttpServlet {
 
@@ -34,6 +33,9 @@ public class LoginServlet extends HttpServlet {
 				session.setMaxInactiveInterval(10 * 60);
 				session.setAttribute("email", user.getEmail()); // Guarda el nombre de usuario en la sesión
 				session.setAttribute("userId", user.getUserId());
+				session.setAttribute("userType", user.getUserType());
+				session.setAttribute("notification", user.isNotification());
+				
 
 				switch (user.getUserType()) {
 				case "RETAILER":

@@ -17,12 +17,14 @@ public class RegisterServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String userType = request.getParameter("userType"); // Get userType from the request
+        Boolean notification = Boolean.parseBoolean(request.getParameter("notification"));
 
         User user = new User();
         user.setName(name);
         user.setEmail(email);
         user.setPassword(password);
         user.setUserType(userType); // Set userType for the user
+        user.setNotification(notification);
 
         RegisterDao registerDao = new RegisterDao();
 
