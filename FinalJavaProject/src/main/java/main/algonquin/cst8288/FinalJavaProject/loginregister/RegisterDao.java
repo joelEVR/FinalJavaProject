@@ -11,17 +11,20 @@ public class RegisterDao {
 
     public String registerUser(User user) {
 
+
         String name = user.getName();
         String email = user.getEmail();
         String password = user.getPassword();
         String userType = user.getUserType();
         Boolean notification = user.isNotification();
 
+
         Connection con = null;
         PreparedStatement preparedStatement = null;
 
         try {
             con = DBConnection.getConnection();
+
             String query = "INSERT INTO users(userID, name, email, password, userType, notification) VALUES (null, ?, ?, ?, ?, ?)";
             preparedStatement = con.prepareStatement(query); //Making use of prepared statements to insert bunch of data
             
@@ -32,7 +35,6 @@ public class RegisterDao {
             preparedStatement.setString(3, hashedPassword);
             preparedStatement.setString(4, userType);
             preparedStatement.setBoolean(5, notification);
-            
 
             int i = preparedStatement.executeUpdate();
 
