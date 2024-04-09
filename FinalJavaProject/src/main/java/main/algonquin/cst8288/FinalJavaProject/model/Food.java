@@ -2,6 +2,8 @@ package main.algonquin.cst8288.FinalJavaProject.model;
 
 import java.time.LocalDate;
 
+import main.algonquin.cst8288.FinalJavaProject.controller.FoodItemStatus;
+
 public class Food {
 	
 	private int foodID;
@@ -9,7 +11,7 @@ public class Food {
     private int amount;
     private LocalDate expirationDate;
     private int userID;
-    private String status;
+    private FoodItemStatus status;
     private double price;
     private double discount;
     private String foodLocation;
@@ -45,10 +47,10 @@ public class Food {
 	public void setUserID(int userID) {
 		this.userID = userID;
 	}
-	public String getStatus() {
+	public FoodItemStatus getStatus() {
 		return status;
 	}
-	public void setStatus(String status) {
+	public void setStatus(FoodItemStatus status) {
 		this.status = status;
 	}
 	public double getPrice() {

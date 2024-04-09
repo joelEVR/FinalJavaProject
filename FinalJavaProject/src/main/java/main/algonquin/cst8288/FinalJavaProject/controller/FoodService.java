@@ -6,6 +6,7 @@ import main.algonquin.cst8288.FinalJavaProject.model.Food;
 
 
 
+
 public class FoodService {
 	private FoodDao foodDao;
 
@@ -37,9 +38,11 @@ public class FoodService {
         foodDao.sendSubscriptionNotifications(foodId);
     }
 
-	public Food getFoodItemById(int foodID) {
-	
-		return getFoodItemById(foodID);
+	public Food findFoodItemById(int foodID) {
+		return foodDao.findById(foodID);
 	}
 
+    public List<Food> identifySurplus() {
+        return foodDao.findSurplusItems();
+    }
 }

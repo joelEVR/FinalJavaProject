@@ -6,6 +6,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,34 +15,32 @@ import main.algonquin.cst8288.FinalJavaProject.loginregister.DBConnection;
 import main.algonquin.cst8288.FinalJavaProject.loginregister.User;
 import main.algonquin.cst8288.FinalJavaProject.model.Food;
 
+
+
+
 public class FoodDao {
 	
 public FoodDao(){}
 	
 public List<Food> getAllFoodItemsByUser(int userId, String userType) {
-    List<Food> foodItems = new ArrayList<>();
-    String sql = buildQueryBasedOnUserType(userType, userId);
 
-    try (Connection conn = DBConnection.getConnection();
-         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-        if ("retailers".equals(userType)) {
-            pstmt.setInt(1, userId);
+    List<Food> foodItems = new ArrayList<>(); 
+    String sql = buildQueryBasedOnUserType(userType, userId);
+        
+    try (Connection con = DBConnection.getConnection();   		
+         PreparedStatement pst = con.prepareStatement(sql)) {
+    	
+    	
+        if ("RETAILER".equals(userType)) {//type with "retailer"
+            pst.setInt(1, userId);
         }
-        ResultSet rs = pstmt.executeQuery();
+        
+        ResultSet rs = pst.executeQuery();
 
         while (rs.next()) {
-            Food foodItem = new Food();
-            foodItem.setFoodID(rs.getInt("foodid"));
-            foodItem.setFoodName(rs.getString("foodname"));
-            foodItem.setAmount(rs.getInt("quantity"));
-            foodItem.setExpirationDate(rs.getDate("expiration_date").toLocalDate());
-            foodItem.setUserID(rs.getInt("userid"));
-            foodItem.setStatus(rs.getString("status"));
-            foodItem.setPrice(rs.getBigDecimal("price").doubleValue());
-            foodItem.setDiscount(rs.getBigDecimal("discount").doubleValue());
-            foodItem.setFoodLocation(rs.getString("foodLocation"));
-            foodItem.setSubscription(rs.getBoolean("subscription"));
-            foodItems.add(foodItem);
+        	// Convert each record in the result set to a FoodItem object and adding to its list.
+            foodItems.add(extractFoodItemFromResultSet(rs));
+ 
         }
     } catch (SQLException e) {
         e.printStackTrace();
@@ -73,7 +73,7 @@ public boolean insertFoodItem(Food foodItem) {
         pstmt.setInt(2, foodItem.getAmount());
         pstmt.setDate(3, Date.valueOf(foodItem.getExpirationDate()));
         pstmt.setInt(4, foodItem.getUserID());
-        pstmt.setString(5, foodItem.getStatus());
+        pstmt.setString(5, foodItem.getStatus().toString());// convert to String
         pstmt.setBigDecimal(6, BigDecimal.valueOf(foodItem.getPrice()));
         pstmt.setBigDecimal(7, BigDecimal.valueOf(foodItem.getDiscount()));
         pstmt.setString(8, foodItem.getFoodLocation());
@@ -88,7 +88,7 @@ public boolean insertFoodItem(Food foodItem) {
 }
 
 public boolean deleteFoodItem(int foodID) {
-    String sql = "DELETE FROM food_items WHERE foodid = ?";
+    String sql = "DELETE FROM food WHERE foodid = ?";
     try (Connection conn = DBConnection.getConnection();
          PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -113,7 +113,7 @@ public boolean updateFoodItem(Food foodItem) {
         pstmt.setInt(2, foodItem.getAmount());
         pstmt.setDate(3, Date.valueOf(foodItem.getExpirationDate()));
         pstmt.setInt(4, foodItem.getUserID());
-        pstmt.setString(5, foodItem.getStatus());
+        pstmt.setString(5, foodItem.getStatus().toString());
         pstmt.setBigDecimal(6, BigDecimal.valueOf(foodItem.getPrice()));
         pstmt.setBigDecimal(7, BigDecimal.valueOf(foodItem.getDiscount()));
         pstmt.setString(8, foodItem.getFoodLocation());
@@ -125,7 +125,7 @@ public boolean updateFoodItem(Food foodItem) {
         statusUpdated = affectedRows > 0;
 
      // Trigger notifications if the item status is updated to "SURPLUS"
-        if (statusUpdated && "SURPLUS".equalsIgnoreCase(foodItem.getStatus())) {
+        if (statusUpdated && "SURPLUS".equalsIgnoreCase(foodItem.getStatus().toString())) {
             sendSurplusNotifications(foodItem);
         }
     } catch (SQLException e) {
@@ -135,7 +135,95 @@ public boolean updateFoodItem(Food foodItem) {
 }
 
 
+	// Related EditForm
+	public Food findById(int foodID) {
+    String sql = "SELECT * FROM food WHERE foodid = ?";
+    try (Connection conn = DBConnection.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
+        pstmt.setInt(1, foodID);
+//        ResultSet rs = pstmt.executeQuery();
+//
+//        if (rs.next()) {
+//            Food foodItem = new Food();
+//            foodItem.setFoodID(rs.getInt("foodid"));
+//            foodItem.setFoodName(rs.getString("foodname"));
+//            foodItem.setAmount(rs.getInt("quantity"));
+//            foodItem.setExpirationDate(rs.getDate("expiration_date").toLocalDate());
+//            foodItem.setUserID(rs.getInt("userid"));
+//            foodItem.setStatus(FoodItemStatus.valueOf(rs.getString("status")));//
+//            foodItem.setPrice(rs.getBigDecimal("price").doubleValue());
+//            foodItem.setDiscount(rs.getBigDecimal("discount").doubleValue());
+//            foodItem.setFoodLocation(rs.getString("foodLocation"));
+//            foodItem.setSubscription(rs.getBoolean("subscription"));
+//            return foodItem;
+//        }
+        try (ResultSet rs = pstmt.executeQuery()) {
+            if (rs.next()) {
+                return extractFoodItemFromResultSet(rs);
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return null;
+}
+
+    // Utility method to avoid repetition
+    private Food extractFoodItemFromResultSet(ResultSet rs) throws SQLException {
+        Food item = new Food();
+
+        item.setFoodID(rs.getInt("foodid"));
+        item.setFoodName(rs.getString("foodname"));
+        item.setAmount(rs.getInt("amount"));
+        item.setExpirationDate(rs.getDate("expiration_date").toLocalDate());
+//        Timestamp timestamp = rs.getTimestamp("expiration_date");
+//        if (timestamp != null) {
+//            // Convert Timestamp to LocalDate
+//            LocalDate expirationDate = timestamp.toLocalDateTime().toLocalDate();
+//            item.setExpirationDate(expirationDate);
+//        }
+        item.setUserID(rs.getInt("userid"));
+        item.setStatus(FoodItemStatus.valueOf(rs.getString("status")));
+        item.setPrice(rs.getBigDecimal("price").doubleValue());
+        item.setDiscount(rs.getBigDecimal("discount").doubleValue());
+        item.setFoodLocation(rs.getString("foodLocation"));
+        item.setSubscription(rs.getBoolean("subscription"));
+        return item;    
+    }
+
+    // These 2 method related to SuplusFood
+    // filter the suplus and list them
+    public List<Food> findSurplusItems() {
+        List<Food> surplusItems = new ArrayList<>();
+        String query = "SELECT * FROM food WHERE status = 'SURPLUS'";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                surplusItems.add(extractFoodItemFromResultSet(rs));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return surplusItems;
+    }
+
+    // Modify food status as Surplus
+    public void markAsSurplus(int id) {
+        String query = "UPDATE food SET status = 'SURPLUS' WHERE id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+
+    
+    
     
     public void sendSurplusNotifications(Food updatedFoodItem) {
         // Example: Fetch all users who have opted-in for notifications
@@ -229,7 +317,9 @@ public boolean updateFoodItem(Food foodItem) {
         }
         return false;
     }
+    
 
+    
     // Utility method to fetch a user's email by userId
     private String getUserEmailById(int userId) {
         String sql = "SELECT email FROM users WHERE userID = ?";
@@ -246,33 +336,6 @@ public boolean updateFoodItem(Food foodItem) {
         return null; // Or handle appropriately
     }
     
-    public Food getFoodItemById(int foodID) {
-        String sql = "SELECT * FROM food_items WHERE foodid = ?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setInt(1, foodID);
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                Food foodItem = new Food();
-                foodItem.setFoodID(rs.getInt("foodid"));
-                foodItem.setFoodName(rs.getString("foodname"));
-                foodItem.setAmount(rs.getInt("quantity"));
-                foodItem.setExpirationDate(rs.getDate("expiration_date").toLocalDate());
-                foodItem.setUserID(rs.getInt("userid"));
-                foodItem.setStatus(rs.getString("status"));
-                foodItem.setPrice(rs.getBigDecimal("price").doubleValue());
-                foodItem.setDiscount(rs.getBigDecimal("discount").doubleValue());
-                foodItem.setFoodLocation(rs.getString("foodLocation"));
-                foodItem.setSubscription(rs.getBoolean("subscription"));
-                return foodItem;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
 }
 
