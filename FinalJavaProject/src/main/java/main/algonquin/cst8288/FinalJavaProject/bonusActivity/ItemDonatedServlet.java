@@ -28,6 +28,9 @@ public class ItemDonatedServlet extends HttpServlet {
 		case "delete":
 			deleteItem(request, response);
 			break;
+		case "edit":
+			editItem(request, response);
+			break;
 		default:
 			response.sendRedirect("login.jsp");
 			break;
@@ -44,9 +47,6 @@ public class ItemDonatedServlet extends HttpServlet {
 			showItemsByLocation(request, response);
 		} else if ("loadUserItems".equals(action)) {
 			loadUserItems(request, response);
-		} else if ("delete".equals(action)) { 
-		} else if ("edit".equals(action)) { 
-			editItem(request, response);
 		} else {
 			response.sendRedirect("login.jsp"); 
 		}

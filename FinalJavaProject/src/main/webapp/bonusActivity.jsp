@@ -88,5 +88,12 @@
 			</tbody>
 		</table>
 	</div>
+	
+	<div class="grid">
+		<div class="form__field">
+			<a href="ItemDonatedServlet?action=loadLocations"
+				class="form__button">Come back to Main Page</a>
+		</div>
+	</div>
 </body>
 </html>

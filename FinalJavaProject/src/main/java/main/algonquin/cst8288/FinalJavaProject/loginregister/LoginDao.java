@@ -39,12 +39,12 @@ public class LoginDao {
                     user.setEmail(emailDB);
                     user.setUserType(roleDB);
                     user.setNotification(notification);
-                    return user; // Devuelve el usuario si la contraseña coincide
+                    return user; 
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null; // Devuelve null si no se encuentra el usuario o la contraseña no coincide
+        return null; 
     }
 }
