@@ -27,6 +27,7 @@
 				<input type="text" id="title" name="title" class="form__input"
 					placeholder="Title" required>
 			</div>
+
 			<div class="form__field">
 				<label for="description"><img src="svg/name.svg"
 					width="20px" height="20px" alt="description_logo"> <span
@@ -34,12 +35,14 @@
 				<textarea id="description" name="description" class="form__input"
 					placeholder="Description" required></textarea>
 			</div>
+
 			<div class="form__field">
 				<label for="quantity"><img src="svg/name.svg" width="20px"
 					height="20px" alt="quantity_logo"> <span class="hidden">Quantity</span></label>
 				<input type="number" id="quantity" name="quantity"
 					class="form__input" placeholder="Quantity" required>
 			</div>
+
 			<div class="form__field">
 				<label for="pickupLocation"><img src="svg/name.svg"
 					width="20px" height="20px" alt="location_logo"> <span
@@ -47,6 +50,16 @@
 					id="pickupLocation" name="pickupLocation" class="form__input"
 					placeholder="Pickup Location" required>
 			</div>
+
+			<div class="form__field">
+				<label for="contactMethod"><img src="svg/contact.svg"
+					width="20px" height="20px" alt="contact_logo"> <span
+					class="hidden">Contact Method</span></label> <input type="text"
+					id="contactMethod" name="contactMethod" class="form__input"
+					placeholder="Contact Method" required>
+			</div>
+
+
 			<div class="form__field">
 				<label for="expirationDate"><img src="svg/name.svg"
 					width="20px" height="20px" alt="calendar_logo"> <span

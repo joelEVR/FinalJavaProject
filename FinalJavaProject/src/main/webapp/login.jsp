@@ -18,7 +18,7 @@
 					width="20px" height="20px" alt="profile_logo"> <span
 					class="hidden">Email</span>
 				</label> <input id="login__email" type="text" name="email"
-					class="form__input" placeholder="Username" required>
+					class="form__input" placeholder="Email Address" required>
 			</div>
 
 			<div class="form__field">

@@ -9,7 +9,7 @@ CREATE TABLE users (
   password VARCHAR(255) NOT NULL,
   userType varchar(120) NOT NULL,
   Location VARCHAR(255),
-  notification BOOLEAN DEFAULT FALSE
+  notification BOOLEAN
 );
 
 INSERT INTO users (name, email, password, userType, Location) 

@@ -29,7 +29,7 @@ public class ItemDonatedServlet extends HttpServlet {
 			deleteItem(request, response);
 			break;
 		default:
-			response.sendRedirect("error.jsp");
+			response.sendRedirect("login.jsp");
 			break;
 		}
 	}
@@ -49,7 +49,7 @@ public class ItemDonatedServlet extends HttpServlet {
 		} else if ("edit".equals(action)) { // Asegúrate de manejar la acción "delete" aquí
 			editItem(request, response);
 		} else {
-			response.sendRedirect("error.jsp"); // Manejar otras acciones/parámetros GET aquí.
+			response.sendRedirect("login.jsp"); // Manejar otras acciones/parámetros GET aquí.
 		}
 	}
 
@@ -61,7 +61,7 @@ public class ItemDonatedServlet extends HttpServlet {
 	    // Validación de la cantidad
 	    if (item.getQuantity() < 1) {
 	        request.setAttribute("errorMessage", "Quantity must be at least 1.");
-	        request.getRequestDispatcher("/addItem.jsp").forward(request, response);
+	        request.getRequestDispatcher("/addItemForm.jsp").forward(request, response);
 	        return;
 	    }
 
@@ -69,7 +69,7 @@ public class ItemDonatedServlet extends HttpServlet {
 	    LocalDate expirationDate = LocalDate.parse(item.getExpirationDate());
 	    if (expirationDate.isBefore(LocalDate.now())) {
 	        request.setAttribute("errorMessage", "Expiration date must be in the future.");
-	        request.getRequestDispatcher("/addItem.jsp").forward(request, response);
+	        request.getRequestDispatcher("/addItemForm.jsp").forward(request, response);
 	        return;
 	    }
 
@@ -77,13 +77,13 @@ public class ItemDonatedServlet extends HttpServlet {
 	        Connection con = DBConnection.getConnection();
 	        ItemDonatedDAO dao = new ItemDonatedDAO(con);
 	        if (dao.addItemDonated(item)) {
-	            response.sendRedirect(request.getContextPath() + "/ItemDonatedServlet?action=loadUserItems");
+	            response.sendRedirect(request.getContextPath() + "/ItemDonatedServlet?action=loadLocations");
 	        } else {
 	            throw new Exception("Error adding the item.");
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();
-	        response.sendRedirect("addItem.jsp");
+	        response.sendRedirect("addItemForm.jsp");
 	    }
 	}
 
@@ -134,11 +134,11 @@ public class ItemDonatedServlet extends HttpServlet {
 				request.setAttribute("itemToEdit", item);
 				request.getRequestDispatcher("/editItemForm.jsp").forward(request, response);
 			} else {
-				response.sendRedirect("error.jsp"); // O manejar de otra manera
+				response.sendRedirect("login.jsp"); // O manejar de otra manera
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.sendRedirect("error.jsp");
+			response.sendRedirect("login.jsp");
 		}
 	}
 
@@ -157,7 +157,7 @@ public class ItemDonatedServlet extends HttpServlet {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.sendRedirect("error.jsp");
+			response.sendRedirect("login.jsp");
 		}
 	}
 
@@ -194,7 +194,7 @@ public class ItemDonatedServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 			// Redirige a una página de error si ocurre una excepción.
-			response.sendRedirect("error.jsp");
+			response.sendRedirect("login.jsp");
 		}
 	}
 
@@ -218,7 +218,7 @@ public class ItemDonatedServlet extends HttpServlet {
 			request.getRequestDispatcher("bonusActivity.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.sendRedirect("error.jsp");
+			response.sendRedirect("login.jsp");
 		}
 	}
 
@@ -234,10 +234,10 @@ public class ItemDonatedServlet extends HttpServlet {
 				ItemDonatedDAO dao = new ItemDonatedDAO(con);
 				List<ItemDonated> userItems = dao.getItemsByUserId(userId);
 				request.setAttribute("userItems", userItems);
-				request.getRequestDispatcher("/editMyItems.jsp").forward(request, response);
+				request.getRequestDispatcher("/manageMyItems.jsp").forward(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
-				response.sendRedirect("error.jsp");
+				response.sendRedirect("login.jsp");
 			}
 		} else {
 			// Si no hay sesión o userId no está en la sesión, redirigir al usuario para

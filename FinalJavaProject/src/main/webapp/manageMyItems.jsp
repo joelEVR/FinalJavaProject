@@ -20,8 +20,6 @@
 	</div>
 	<div class="gridtable">
 
-
-
 		<table class="table">
 			<thead>
 				<tr>
@@ -70,7 +68,7 @@
 				} else {
 				%>
 				<tr>
-					<td colspan="5">No items found.</td>
+					<td colspan="7">No items found.</td>
 				</tr>
 				<%
 				}
