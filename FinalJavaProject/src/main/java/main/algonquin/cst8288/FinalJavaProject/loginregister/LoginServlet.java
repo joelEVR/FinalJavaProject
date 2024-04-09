@@ -52,7 +52,7 @@ public class LoginServlet extends HttpServlet {
 					System.out.println("Consumer role entered");
 					// En LoginServlet, después de la autenticación exitosa carga la lista de
 					// ubicaciones y redirige a funcionbonus
-					response.sendRedirect(request.getContextPath() + "/ItemDonatedServlet?action=loadLocations");
+					response.sendRedirect(request.getContextPath() + "/consumer.jsp");
 
 					/*
 					 * request.getRequestDispatcher("/bonusActivity.jsp").forward(request,

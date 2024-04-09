@@ -220,17 +220,14 @@ public boolean updateFoodItem(Food foodItem) {
             ex.printStackTrace();
         }
     }
-    
-
-    
-    
+     
     
     public void sendSurplusNotifications(Food updatedFoodItem) {
         // Example: Fetch all users who have opted-in for notifications
         List<User> usersToNotify = getAllUsersWithNotificationsEnabled();
 
         for (User user : usersToNotify) {
-        	System.out.println("Notification Email to: " + user.getEmail() + ";\n\n\n  Notification: The food status is updated to Surplus, please log in the system to check!");
+        	System.out.println("Notification Email to: " + user.getEmail() + ";\nNotification: The food status is updated to Surplus, please log in the system to check!");
         }    
     }
 
@@ -254,15 +251,6 @@ public boolean updateFoodItem(Food foodItem) {
         return users;
     }
 
-    // lack of content in this method
-    private List<User> getUsersSubscribedToFoodItem(Food foodItem) {
-        List<User> users = new ArrayList<>();
-        // Implement fetching of users subscribed to the specific food item
-        // This method should query your database to find users who have subscribed to the food item matching the criteria
-        return users;
-    }
-    
-    
     
     public boolean addSubscription(int userId, int foodId) {
         String userEmail = getUserEmailById(userId); 
@@ -321,7 +309,7 @@ public boolean updateFoodItem(Food foodItem) {
 
     
     // Utility method to fetch a user's email by userId
-    private String getUserEmailById(int userId) {
+    public String getUserEmailById(int userId) {
         String sql = "SELECT email FROM users WHERE userID = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -337,5 +325,76 @@ public boolean updateFoodItem(Food foodItem) {
     }
     
 
+    public boolean updateSubscriptionStatus(int foodId, boolean newStatus) {
+        String sql = "UPDATE food SET subscription = ? WHERE foodid = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setBoolean(1, newStatus);
+            pstmt.setInt(2, foodId);
+            int affectedRows = pstmt.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public boolean purchaseAndUpdateInventory(int foodId, int purchaseAmount) {
+        // Fetch current inventory
+        String fetchSql = "SELECT amount FROM food WHERE foodid = ?";
+        int currentAmount = 0;
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement fetchStmt = conn.prepareStatement(fetchSql)) {
+            
+            fetchStmt.setInt(1, foodId);
+            try (ResultSet rs = fetchStmt.executeQuery()) {
+                if (rs.next()) {
+                    currentAmount = rs.getInt("amount");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        // Update inventory if sufficient stock is available
+        if (currentAmount >= purchaseAmount) {
+            String updateSql = "UPDATE food SET amount = amount - ? WHERE foodid = ?";
+            try (Connection conn = DBConnection.getConnection();
+                 PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
+                
+                updateStmt.setInt(1, purchaseAmount);
+                updateStmt.setInt(2, foodId);
+                int affectedRows = updateStmt.executeUpdate();
+                return affectedRows > 0;
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
+        } else {
+            System.out.println("Not enough inventory for purchase.");
+            return false;
+        }
+    }
+    
+    
+    public boolean addSubscriptionRecord(int userId, int foodId, String userEmail) {
+        String insertSql = "INSERT INTO subscription (userId, foodId, userEmail) VALUES (?, ?, ?)";
+        
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(insertSql)) {
+            
+            pstmt.setInt(1, userId);
+            pstmt.setInt(2, foodId);
+            pstmt.setString(3, userEmail);
+            
+            int affectedRows = pstmt.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
 

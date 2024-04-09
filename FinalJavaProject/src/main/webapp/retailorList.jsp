@@ -16,7 +16,7 @@
         Name: <input type="text" name="foodName" value="<%= ((Food)request.getAttribute("foodItem")).getFoodName() %>"><br>
         Amount: <input type="number" name="amount" value="<%= ((Food)request.getAttribute("foodItem")).getAmount() %>"><br>
         Expiration Date: <input type="date" name="expirationDate" value="<%= ((Food)request.getAttribute("foodItem")).getExpirationDate().toString() %>"><br>
-        UserID: <input type="number" name="userID" value="<%= ((Food)request.getAttribute("foodItem")).getUserID() %>"><br>
+<%--         UserID: <input type="number" name="userID" value="<%= ((Food)request.getAttribute("foodItem")).getUserID() %>"><br> --%>
         Status:
         <select name="status">
             <% for (FoodItemStatus status : FoodItemStatus.values()) { %>

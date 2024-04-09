@@ -17,7 +17,7 @@
         Name: <input type="text" name="foodName" value=""><br>
         Amount: <input type="number" name="amount" value=""><br>
         Expiration Date: <input type="date" name="expirationDate" value=""><br>
-        UserID: <input type="number" name="userID" value=""><br>
+<!--         UserID: <input type="number" name="userID" value=""><br> -->
         Status: <select name="status">
             <option value="AVAILABLE">Available</option>
             <option value="SURPLUS">Surplus</option>
@@ -34,10 +34,14 @@
         <input type="submit" value="Save As New Food Item">
     </form>
 
-    <!-- Food Items List -->
+
+    Food Items List
     <h3>Food Items List</h3>
-<%--     <a href="<%=request.getContextPath()%>/foodItem/listSurplus" class="btn btn-info"> --%>
-<!--     View Surplus Food Items</a> -->
+    <a href="<%=request.getContextPath()%>/food/listSurplus" class="btn btn-info">
+    View Surplus Food Items</a>
+  
+    <br><br>
+
     
     <a href="<%=request.getContextPath()%>/food?action=list" 
     class="btn btn-info">View All Food Items</a>
