@@ -1,3 +1,10 @@
+/**
+ * Student Name: Ting Cheng
+ * Professor: Sazzad Hossain
+ * Due Date: April 9,2024
+ * Description:  CST8288-031 Final Project  
+ * Modify Date: April 9,2024 
+ */
 package main.algonquin.cst8288.FinalJavaProject.controller;
 
 import java.io.IOException;
@@ -17,7 +24,9 @@ import main.algonquin.cst8288.FinalJavaProject.loginregister.User;
 import main.algonquin.cst8288.FinalJavaProject.model.Food;
 
 
-
+/**
+ * This is the servlet of food class which work on the food related operations
+ */
 @WebServlet("/food/*")
 public class FoodServlet extends HttpServlet{
 	
@@ -26,7 +35,9 @@ public class FoodServlet extends HttpServlet{
 	private FoodDao foodDao;
 	private int userid=0;
 
-    //Called by the servlet container to indicate the servlet is being placed into service.
+	/**
+	 * This method Called by the servlet container to indicate the servlet is being placed into service.
+	 */
     @Override
     public void init() throws ServletException {
         this.foodService = new FoodService();
@@ -34,7 +45,9 @@ public class FoodServlet extends HttpServlet{
         this.foodDao = new FoodDao();
     }
 
-    //Handle GET requests. It uses the request's path info to determine the action to take
+    /**
+     * This method handle GET requests. It uses the request's path info to determine the action to take
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
@@ -61,6 +74,9 @@ public class FoodServlet extends HttpServlet{
         }
     }
 
+    /**
+     * This method  handle POST requests. It uses the request's path info to determine the action to take
+     */
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -86,13 +102,20 @@ public class FoodServlet extends HttpServlet{
         }
     }
     
+    /**
+     * This method used to handle the purchase operation by updating the subscription status, inventory,
+     * and inserting a subscription record for a specified food item.
+     * @param request the object that contains the request the client has made to the servlet
+     * @param response the object that contains the response the servlet sends to the client
+     * @throws ServletException if the request for the POST could not be handled
+     * @throws IOException if an input or output error is detected when the servlet handles the request
+     */
     private void updatePurchase(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	// Extract request parameters
         int foodId = Integer.parseInt(request.getParameter("foodId"));
         boolean newSubscriptionStatus = Boolean.parseBoolean(request.getParameter("newSubscriptionStatus"));
         int purchaseAmount = Integer.parseInt(request.getParameter("purchaseAmount"));
         
-        // Assume you have a method to get the currently logged-in user's ID and email
         HttpSession session = request.getSession();
         int userId = (int) session.getAttribute("userId");
 
@@ -129,14 +152,21 @@ public class FoodServlet extends HttpServlet{
         }
     }
     
-
+/**
+ * this method used to hanle the purchase operation
+ * 
+ * @param request the object that contains the request the client has made to the servlet
+ * @param response the object that contains the response the servlet sends to the client
+ * @throws ServletException if the request for the POST could not be handled
+ * @throws IOException if an input or output error is detected when the servlet handles the request
+ */
     private void purchase(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
     	
     	
         int foodID = Integer.parseInt(request.getParameter("foodId"));
         
-        Food foodItem = foodService.findFoodItemById(foodID); // Assuming this method exists and fetches the item
+        Food foodItem = foodService.findFoodItemById(foodID); 
         if (foodItem != null) {
             request.setAttribute("foodItem", foodItem);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/consumerList.jsp"); 
@@ -146,7 +176,14 @@ public class FoodServlet extends HttpServlet{
         }
     }
         
-    // Helper Methods - handle listing food items
+    /**
+     * This method handle listing food items
+     * 
+     * @param request the object that contains the request the client has made to the servlet
+     * @param response the object that contains the response the servlet sends to the client
+     * @throws ServletException if the request for the POST could not be handled
+     * @throws IOException if an input or output error is detected when the servlet handles the request
+     */
     private void listFoodItems(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
     	
@@ -175,6 +212,14 @@ public class FoodServlet extends HttpServlet{
         
     }
    
+    /**
+     * This method used to operate the delete food item from the database
+     * 
+     * @param request the object that contains the request the client has made to the servlet
+     * @param response the object that contains the response the servlet sends to the client
+     * @throws IOException if an input or output error is detected when the servlet handles the request
+     * @throws ServletException if the request for the POST could not be handled
+     */
   
     private void deleteFoodItem(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         
@@ -186,6 +231,13 @@ public class FoodServlet extends HttpServlet{
         response.sendRedirect(request.getContextPath() +"/food/list");//typo "foodItem/list"
     }
 
+    /**
+     * This method used to list the surplus food item in the database
+     * @param request the object that contains the request the client has made to the servlet
+     * @param response the object that contains the response the servlet sends to the client
+     * @throws ServletException if the request for the POST could not be handled
+     * @throws IOException if an input or output error is detected when the servlet handles the request
+     */
     // Handles identifying surplus food items    
     private void listSurplusFoodItems(HttpServletRequest request, HttpServletResponse response)
     		throws ServletException, IOException {
@@ -196,6 +248,13 @@ public class FoodServlet extends HttpServlet{
     }
     
     
+    /**
+     * This method used to preapare the edit operation of the food item
+     * @param request the object that contains the request the client has made to the servlet
+     * @param response the object that contains the response the servlet sends to the client
+     * @throws ServletException if the request for the POST could not be handled
+     * @throws IOException if an input or output error is detected when the servlet handles the request
+     */
     private void prepareEditForm(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
     	
@@ -212,15 +271,27 @@ public class FoodServlet extends HttpServlet{
         }
     }
     
+    /**
+     * This method used to mark surplus status of the food item
+     * @param request the object that contains the request the client has made to the servlet
+     * @param response the object that contains the response the servlet sends to the client
+     * @throws IOException if an input or output error is detected when the servlet handles the request
+     */
     private void markAsSurplus(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int foodID = Integer.parseInt(request.getParameter("foodID"));
         foodDao.markAsSurplus(foodID); // Not in foodItemService
         response.sendRedirect(request.getContextPath() + "/food/list");
     }
  
-    
-    //Flag isNew to distinguish between add and update operations so that form submissions 
-    //can be handled in the same method, simplifying your code
+    /**
+     * This method handled inside and update operation of food item
+     * @param request the object that contains the request the client has made to the servlet
+     * @param response the object that contains the response the servlet sends to the client
+     * @param isNew distinguish between add and update operations so that form submissions 
+     * @throws ServletException if the request for the POST could not be handled
+     * @throws IOException if an input or output error is detected when the servlet handles the request
+     */
+
     private void insertOrUpdateFoodItem(HttpServletRequest request, HttpServletResponse response,boolean isNew) 
     		throws ServletException, IOException {
         // Extract information from request
@@ -230,8 +301,7 @@ public class FoodServlet extends HttpServlet{
         LocalDate expirationDate = LocalDate.parse(request.getParameter("expirationDate"));
         
 //        int userid = Integer.parseInt(request.getParameter("userID"));
-        
-        
+                
      // Use the userID from the session
         HttpSession session = request.getSession();
         int userid = (Integer) session.getAttribute("userId");
@@ -268,7 +338,12 @@ public class FoodServlet extends HttpServlet{
         }
         response.sendRedirect(request.getContextPath() + "/food/list");
     }
-    
+ 
+    /**
+     * This method used to get jsp file path by different user type
+     * @param userType the type of user
+     * @return the jsp path 
+     */
     private String getUserJspPath(String userType) {
         switch (userType) {
             case "RETAILER":

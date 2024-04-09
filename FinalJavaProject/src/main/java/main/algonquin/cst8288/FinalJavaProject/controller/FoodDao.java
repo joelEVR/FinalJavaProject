@@ -1,3 +1,10 @@
+/**
+ * Student Name: Ting Cheng
+ * Professor: Sazzad Hossain
+ * Due Date: April 9,2024
+ * Description:  CST8288-031 Final Project  
+ * Modify Date: April 9,2024 
+ */
 package main.algonquin.cst8288.FinalJavaProject.controller;
 
 import java.math.BigDecimal;
@@ -17,11 +24,24 @@ import main.algonquin.cst8288.FinalJavaProject.model.Food;
 
 
 
-
+/**
+ * This class is used to performing database operations related to food items.
+ */
 public class FoodDao {
-	
+	/**
+	 * constructor mehtod
+	 */
 public FoodDao(){}
 	
+/**
+ * List all food item by different user type.  The retailor can only find his food item
+ * The consumer can find all the surplus food with discount >0 and discount<100; The charitable
+ * organization can find all the surplus food with discount = 100
+ * 
+ * @param userId the id of user who login the project to 
+ * @param userType the type of user
+ * @return a list of object of find out food item
+ */
 public List<Food> getAllFoodItemsByUser(int userId, String userType) {
 
     List<Food> foodItems = new ArrayList<>(); 
@@ -48,7 +68,16 @@ public List<Food> getAllFoodItemsByUser(int userId, String userType) {
     return foodItems;
 }
 
-private String buildQueryBasedOnUserType(String userType, int userId) {
+/**
+ * This method used to generate the corresponding query to fetch the food item 
+ * depends on different user type. Retailer get his food list, consumer gets 
+ * all the surplus food item discount>0 and discount<100, charitable organization
+ * get all the surplus food item discount = 100
+ * @param userType tpye of user
+ * @param userId id of user who login the project 
+ * @return
+ */
+public String buildQueryBasedOnUserType(String userType, int userId) {
     
 	if ("RETAILER".equals(userType)) {
 		
@@ -64,6 +93,13 @@ private String buildQueryBasedOnUserType(String userType, int userId) {
     }
 }
 
+/**
+ * Insert food item into the fwrp database's food table
+ * 
+ * @param foodItem the food item want to insert into
+ * 
+ * @return boolean value show insert success or not, true success or false fail
+ */
 public boolean insertFoodItem(Food foodItem) {
     String sql = "INSERT INTO food (foodname, amount, expiration_date, userid, status, price, discount, foodLocation, subscription) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     try (Connection conn = DBConnection.getConnection();
@@ -87,6 +123,13 @@ public boolean insertFoodItem(Food foodItem) {
     }
 }
 
+/**
+ * Delete the indicate food item from the fswp database
+ * 
+ * @param foodID the id of food item which want to delete
+ * 
+ * @return boolean value show delete success or not, true success or false fail
+ */
 public boolean deleteFoodItem(int foodID) {
     String sql = "DELETE FROM food WHERE foodid = ?";
     try (Connection conn = DBConnection.getConnection();
@@ -101,6 +144,13 @@ public boolean deleteFoodItem(int foodID) {
     }
 }
     
+/**
+ * Update the food item in the databse
+ * 
+ * @param foodItem the food item which want to update in the database
+ * 
+ * @return boolean value show update success or not, true success or false fail
+ */
 public boolean updateFoodItem(Food foodItem) {
 	
 	boolean statusUpdated = false;
@@ -135,7 +185,13 @@ public boolean updateFoodItem(Food foodItem) {
 }
 
 
-	// Related EditForm
+/**
+ * Find the food item by food id
+ * 
+ * @param foodID the id of food item
+ * 
+ * @return the corresponding food item
+ */
 	public Food findById(int foodID) {
     String sql = "SELECT * FROM food WHERE foodid = ?";
     try (Connection conn = DBConnection.getConnection();
@@ -169,8 +225,17 @@ public boolean updateFoodItem(Food foodItem) {
     return null;
 }
 
-    // Utility method to avoid repetition
-    private Food extractFoodItemFromResultSet(ResultSet rs) throws SQLException {
+	/**
+	 * This method used to extract the valid food item from database and
+	 * return them to the involk method
+	 *  
+	 * @param rs the ResultSet object
+	 * 
+	 * @return the list of food item match the ingest request.
+	 * 
+	 * @throws SQLException handle SQL Exceptions
+	 */
+    public Food extractFoodItemFromResultSet(ResultSet rs) throws SQLException {
         Food item = new Food();
 
         item.setFoodID(rs.getInt("foodid"));
@@ -192,8 +257,12 @@ public boolean updateFoodItem(Food foodItem) {
         return item;    
     }
 
-    // These 2 method related to SuplusFood
-    // filter the suplus and list them
+    /**
+     * This method is to extract the food which status is surplus
+     * 
+     * @return the surplus list of food
+     */
+
     public List<Food> findSurplusItems() {
         List<Food> surplusItems = new ArrayList<>();
         String query = "SELECT * FROM food WHERE status = 'SURPLUS'";
@@ -209,7 +278,11 @@ public boolean updateFoodItem(Food foodItem) {
         return surplusItems;
     }
 
-    // Modify food status as Surplus
+/**
+ * This method used to change the status of food item to surplus
+ * 
+ * @param id the food id
+ */
     public void markAsSurplus(int id) {
         String query = "UPDATE food SET status = 'SURPLUS' WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();
@@ -221,17 +294,25 @@ public boolean updateFoodItem(Food foodItem) {
         }
     }
      
-    
+  /**
+   * This method used to send notification email to user when food status changed to surplus
+   *   
+   * @param updatedFoodItem the food item which is updated
+   */
     public void sendSurplusNotifications(Food updatedFoodItem) {
-        // Example: Fetch all users who have opted-in for notifications
+        //Fetch all users who want notifications
         List<User> usersToNotify = getAllUsersWithNotificationsEnabled();
 
         for (User user : usersToNotify) {
         	System.out.println("Notification Email to: " + user.getEmail() + ";\nNotification: The food status is updated to Surplus, please log in the system to check!");
         }    
     }
-
-    private List<User> getAllUsersWithNotificationsEnabled() {
+/**
+ * Get all the users who subscribe the notification 
+ * 
+ * @return the user list
+ */
+    public List<User> getAllUsersWithNotificationsEnabled() {
         List<User> users = new ArrayList<>();
         String sql = "SELECT userID, email FROM users WHERE notification = TRUE";
 
@@ -251,7 +332,15 @@ public boolean updateFoodItem(Food foodItem) {
         return users;
     }
 
-    
+    /**
+     * When user change the status to subscription, add this information to the subscription table
+     * 
+     * @param userId The subscription user id
+     * 
+     * @param foodId The food id which user subscribed
+     * 
+     * @return boolean value true for success and false for fail
+     */
     public boolean addSubscription(int userId, int foodId) {
         String userEmail = getUserEmailById(userId); 
         String sql = "INSERT INTO subscriptions (userId, foodId, userEmail) VALUES (?, ?, ?)";
@@ -270,6 +359,11 @@ public boolean updateFoodItem(Food foodItem) {
         }
     }
 
+    /**
+     * This method used to send subscription email to user who add subscription 
+     * 
+     * @param foodId the food id which user subscribed
+     */
     public void sendSubscriptionNotifications(int foodId) {
         // First, check if the foodId corresponds to a SURPLUS item
         if (isFoodItemSurplus(foodId)) {
@@ -289,9 +383,15 @@ public boolean updateFoodItem(Food foodItem) {
             }
         }
     }
-    
-    // Utility method to check if a food item is marked as SURPLUS
-    private boolean isFoodItemSurplus(int foodId) {
+ 
+    /**
+     * This method used to check if the food item is surplus or not
+     * 
+     * @param foodId the checked food id
+     * 
+     * @return boolean value true for surplus food, false for not
+     */
+    public boolean isFoodItemSurplus(int foodId) {
         String sql = "SELECT status FROM food WHERE foodid = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -307,8 +407,13 @@ public boolean updateFoodItem(Food foodItem) {
     }
     
 
-    
-    // Utility method to fetch a user's email by userId
+    /**
+     * This method used to fetch user's email by user id
+     * 
+     * @param userId the id of user
+     * 
+     * @return the email of user
+     */
     public String getUserEmailById(int userId) {
         String sql = "SELECT email FROM users WHERE userID = ?";
         try (Connection conn = DBConnection.getConnection();
@@ -324,7 +429,15 @@ public boolean updateFoodItem(Food foodItem) {
         return null; // Or handle appropriately
     }
     
-
+/**
+ * This method used to update the subscription status of a food item
+ * 
+ * @param foodId the id of food
+ * 
+ * @param newStatus the new status, yes for subscribed, no for not subscribed
+ * 
+ * @return boolean value true for success fails for fail
+ */
     public boolean updateSubscriptionStatus(int foodId, boolean newStatus) {
         String sql = "UPDATE food SET subscription = ? WHERE foodid = ?";
         try (Connection conn = DBConnection.getConnection();
@@ -339,7 +452,16 @@ public boolean updateFoodItem(Food foodItem) {
             return false;
         }
     }
-    
+  
+    /**
+     * This method used to operate the purchase operation to update the food inventory
+     * 
+     * @param foodId The food id which is involved into the purchase 
+     * 
+     * @param purchaseAmount purchase amount
+     * 
+     * @return boolean value true for success false for fail
+     */
     public boolean purchaseAndUpdateInventory(int foodId, int purchaseAmount) {
         // Fetch current inventory
         String fetchSql = "SELECT amount FROM food WHERE foodid = ?";
@@ -378,7 +500,13 @@ public boolean updateFoodItem(Food foodItem) {
         }
     }
     
-    
+    /**
+     * This method is insert subscription record into the subscription table in the database
+     * @param userId the subscribed user
+     * @param foodId the food id which is subscribed
+     * @param userEmail the email address of subscribed user
+     * @return boolean value true for success false for fail
+     */
     public boolean addSubscriptionRecord(int userId, int foodId, String userEmail) {
         String insertSql = "INSERT INTO subscription (userId, foodId, userEmail) VALUES (?, ?, ?)";
         
