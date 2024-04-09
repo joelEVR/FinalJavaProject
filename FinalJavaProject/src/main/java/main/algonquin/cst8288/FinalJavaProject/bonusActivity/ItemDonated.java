@@ -9,8 +9,17 @@ public class ItemDonated {
     private int quantity;
     private String pickupLocation;
     private String expirationDate;
-    private String status; // Puede ser "disponible", "reservado", "intercambiado"
+    private String status;
+    private String contactMethod;
     
+    
+	public String getContactMethod() {
+		return contactMethod;
+	}
+	public void setContactMethod(String contactMethod) {
+		this.contactMethod = contactMethod;
+	}
+	
 	public int getItemId() {
 		return itemId;
 	}
