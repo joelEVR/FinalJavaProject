@@ -51,18 +51,19 @@ CREATE TABLE FoodItemsForExchange (
     PickupLocation VARCHAR(255) NOT NULL,
     ExpirationDate DATE NOT NULL,
     Status ENUM('available', 'reserved', 'exchanged') NOT NULL,
+    ContactMethod VARCHAR(50) NOT NULL,
     FOREIGN KEY (UserID) REFERENCES Users(UserId) 
 );
 
-INSERT INTO FoodItemsForExchange (UserId, Title, Description, Quantity, PickupLocation, ExpirationDate, Status)
+INSERT INTO FoodItemsForExchange (UserId, Title, Description, Quantity, PickupLocation, ExpirationDate, Status, ContactMethod)
 VALUES 
-(1, 'Whole Wheat Bread', 'A batch of fresh whole wheat bread', 10, '123 Fake Street, City', '2024-05-30', 'available'),
-(1, 'Apples', 'Box of red apples', 5, '742 Evergreen Terrace, City', '2024-06-15', 'available'),
-(1, 'Carrots', 'Large bag of carrots', 20, '123 Fake Street, City', '2024-05-25', 'available'),
-(1, 'Tomatoes', 'Box of cherry tomatoes', 15, '456 New Street, City', '2024-06-01', 'available'),
-(1, 'Romaine Lettuce', 'Organic romaine lettuce heads', 8, '742 Evergreen Terrace, City', '2024-05-20', 'available'),
-(1, 'Garlic Bread', 'Homemade garlic bread', 10, '123 Fake Street, City', '2024-06-10', 'available'),
-(2, 'Bananas', 'Bunch of ripe bananas', 6, '789 Central Avenue, City', '2024-05-18', 'available'),
-(2, 'Chicken Breasts', 'Frozen chicken breasts', 5, '456 New Street, City', '2024-06-20', 'available'),
-(2, 'Quinoa', 'Bags of quinoa', 12, '789 Central Avenue, City', '2024-06-05', 'available'),
-(2, 'Brown Rice', 'Bags of brown rice', 7, '123 Fake Street, City', '2024-05-28', 'available');
+(1, 'Whole Wheat Bread', 'A batch of fresh whole wheat bread', 10, '123 Fake Street, City', '2024-05-30', 'available', 'Phone'),
+(1, 'Apples', 'Box of red apples', 5, '742 Evergreen Terrace, City', '2024-06-15', 'available', 'Email'),
+(1, 'Carrots', 'Large bag of carrots', 20, '123 Fake Street, City', '2024-05-25', 'available', 'Phone'),
+(1, 'Tomatoes', 'Box of cherry tomatoes', 15, '456 New Street, City', '2024-06-01', 'available', 'Email'),
+(1, 'Romaine Lettuce', 'Organic romaine lettuce heads', 8, '742 Evergreen Terrace, City', '2024-05-20', 'available', 'Phone'),
+(1, 'Garlic Bread', 'Homemade garlic bread', 10, '123 Fake Street, City', '2024-06-10', 'available', 'Email'),
+(2, 'Bananas', 'Bunch of ripe bananas', 6, '789 Central Avenue, City', '2024-05-18', 'available', 'Phone'),
+(2, 'Chicken Breasts', 'Frozen chicken breasts', 5, '456 New Street, City', '2024-06-20', 'available', 'Email'),
+(2, 'Quinoa', 'Bags of quinoa', 12, '789 Central Avenue, City', '2024-06-05', 'available', 'Phone'),
+(2, 'Brown Rice', 'Bags of brown rice', 7, '123 Fake Street, City', '2024-05-28', 'available', 'Email');
