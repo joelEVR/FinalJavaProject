@@ -64,16 +64,6 @@ public class FoodService {
     
     
     /**
-     * This method used to involk add subscription operation
-     * @param userId the subscription operated user's id 
-     * @param foodId the subscribed food id
-     */
-    public void addSubscription(int userId, int foodId) {
-        foodDao.addSubscription(userId, foodId);
-    }
-
-    
-    /**
      * This method used to involk send the notification to the subscribor
      * @param foodId the food id which is subscribed
      */
@@ -95,5 +85,22 @@ public class FoodService {
 	 */
     public List<Food> identifySurplus() {
         return foodDao.findSurplusItems();
+    }
+    
+    /**
+     * List all surplus statues food
+     * @return the food item list
+     */
+    public List<Food> listAllSurplusFoodItems() {
+        return foodDao.findSurplusItems();
+    }
+
+    /**
+     * List the surplus food by user id
+     * @param userId  id of user
+     * @return the food item list
+     */
+    public List<Food> listSurplusFoodItemsByUser(int userId) {
+        return foodDao.findSurplusItemsByUser(userId);
     }
 }

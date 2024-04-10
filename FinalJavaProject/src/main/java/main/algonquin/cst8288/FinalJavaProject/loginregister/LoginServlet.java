@@ -61,7 +61,7 @@ public class LoginServlet extends HttpServlet {
 				case "CHARITY":
 					System.out.println("Charity role entered");
 					// En LoginServlet, después de la autenticación exitosa
-					response.sendRedirect(request.getContextPath() + "/ItemDonatedServlet?action=loadLocations");
+					response.sendRedirect(request.getContextPath() + "/charity.jsp");
 
 					/*
 					 * request.getRequestDispatcher("/bonusActivity.jsp").forward(request,

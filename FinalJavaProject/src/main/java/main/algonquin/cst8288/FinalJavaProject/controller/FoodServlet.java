@@ -241,7 +241,22 @@ public class FoodServlet extends HttpServlet{
     // Handles identifying surplus food items    
     private void listSurplusFoodItems(HttpServletRequest request, HttpServletResponse response)
     		throws ServletException, IOException {
-    	List<Food> surplusFoodItems = foodService.identifySurplus();
+//    	List<Food> surplusFoodItems = foodService.identifySurplus();
+//        request.setAttribute("surplusFoodItems", surplusFoodItems);
+//        RequestDispatcher dispatcher = request.getRequestDispatcher("/surplusFoodItemList.jsp");
+//        dispatcher.forward(request, response);
+    	
+    	HttpSession session = request.getSession();
+        String userType = (String) session.getAttribute("userType");
+        List<Food> surplusFoodItems;
+
+        if ("RETAILER".equals(userType)) {
+            int userId = (Integer) session.getAttribute("userId");
+            surplusFoodItems = foodService.listSurplusFoodItemsByUser(userId);
+        } else {
+            surplusFoodItems = foodService.listAllSurplusFoodItems();
+        }
+
         request.setAttribute("surplusFoodItems", surplusFoodItems);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/surplusFoodItemList.jsp");
         dispatcher.forward(request, response);

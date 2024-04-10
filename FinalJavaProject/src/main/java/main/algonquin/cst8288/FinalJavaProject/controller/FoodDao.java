@@ -72,7 +72,7 @@ public List<Food> getAllFoodItemsByUser(int userId, String userType) {
  * This method used to generate the corresponding query to fetch the food item 
  * depends on different user type. Retailer get his food list, consumer gets 
  * all the surplus food item discount>0 and discount<100, charitable organization
- * get all the surplus food item discount = 100
+ * get all the surplus food item status is claimed
  * @param userType tpye of user
  * @param userId id of user who login the project 
  * @return
@@ -84,7 +84,7 @@ public String buildQueryBasedOnUserType(String userType, int userId) {
         return "SELECT * FROM food WHERE userid = ?";
     } else if ("CHARITY".equals(userType)) {
     	
-        return "SELECT * FROM food WHERE discount = 100";
+        return "SELECT * FROM food WHERE status = 'CLAIMED'";
     } else if ("CONSUMER".equals(userType)) {
     	
         return "SELECT * FROM food WHERE discount > 0 AND discount < 100";
@@ -177,7 +177,8 @@ public boolean updateFoodItem(Food foodItem) {
      // Trigger notifications if the item status is updated to "SURPLUS"
         if (statusUpdated && "SURPLUS".equalsIgnoreCase(foodItem.getStatus().toString())) {
             sendSurplusNotifications(foodItem);
-        }
+            sendSubscriptionNotifications(foodItem.getFoodID()); 
+            }
     } catch (SQLException e) {
         e.printStackTrace();
     }
@@ -332,32 +333,6 @@ public boolean updateFoodItem(Food foodItem) {
         return users;
     }
 
-    /**
-     * When user change the status to subscription, add this information to the subscription table
-     * 
-     * @param userId The subscription user id
-     * 
-     * @param foodId The food id which user subscribed
-     * 
-     * @return boolean value true for success and false for fail
-     */
-    public boolean addSubscription(int userId, int foodId) {
-        String userEmail = getUserEmailById(userId); 
-        String sql = "INSERT INTO subscriptions (userId, foodId, userEmail) VALUES (?, ?, ?)";
-        
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, userId);
-            pstmt.setInt(2, foodId);
-            pstmt.setString(3, userEmail);
-
-            int affectedRows = pstmt.executeUpdate();
-            return affectedRows > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
 
     /**
      * This method used to send subscription email to user who add subscription 
@@ -365,24 +340,48 @@ public boolean updateFoodItem(Food foodItem) {
      * @param foodId the food id which user subscribed
      */
     public void sendSubscriptionNotifications(int foodId) {
-        // First, check if the foodId corresponds to a SURPLUS item
-        if (isFoodItemSurplus(foodId)) {
-            String sql = "SELECT userEmail FROM subscriptions WHERE foodId = ?";
+        // First, check if the foodId corresponds to a SURPLUS item and has subscription record   	
+    	if (isFoodItemSurplus(foodId) && hasSubscriptions(foodId)) {
+            String sql = "SELECT userEmail FROM subscription WHERE foodId = ?";
             try (Connection conn = DBConnection.getConnection();
                  PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setInt(1, foodId);
-                ResultSet rs = pstmt.executeQuery();
-                
-                while (rs.next()) {
-                    String userEmail = rs.getString("userEmail");
-                    // Simulate sending an email notification
-                    System.out.println("Subscription Email to: " + userEmail + "; Subscription: A food item you are subscribed to is now marked as SURPLUS. Please log in to check.");
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    while (rs.next()) {
+                        String userEmail = rs.getString("userEmail");
+                        // Sending subscription email
+                        System.out.println("Subscription Email to: " + userEmail + "; Subscription News: The food item you are subscribed to is now marked as SURPLUS. Please log in to check.");
+                    }
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }
+        } 
+
     }
+    
+    /**
+     * This method check the food id has subscription record in the subscription table
+     * @param foodId the id of food
+     * @return true for success and false for fail
+     */
+    
+    public boolean hasSubscriptions(int foodId) {
+        String sql = "SELECT COUNT(*) AS subscription_count FROM subscription WHERE foodId = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, foodId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("subscription_count") > 0; // True if at least one subscription exists
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false; // False if no subscriptions found or on error
+    }
+    
  
     /**
      * This method used to check if the food item is surplus or not
@@ -523,6 +522,28 @@ public boolean updateFoodItem(Food foodItem) {
             e.printStackTrace();
             return false;
         }
+    }
+    
+    /**
+     * Find the surplus food by user id
+     * @param userId id of user
+     * @return teh food list
+     */
+    public List<Food> findSurplusItemsByUser(int userId) {
+        List<Food> surplusItemsByUser = new ArrayList<>();
+        String query = "SELECT * FROM food WHERE status = 'SURPLUS' AND userid = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    surplusItemsByUser.add(extractFoodItemFromResultSet(rs));
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return surplusItemsByUser;
     }
 }
 

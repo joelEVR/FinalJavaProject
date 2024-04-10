@@ -29,6 +29,6 @@
         FoodLocation: <input type="text" name="foodLocation" value="<%= ((Food)request.getAttribute("foodItem")).getFoodLocation() %>"><br>
         <input type="submit" value="Update Food Item">
     </form>
-    <a href="<%=request.getContextPath()%>/foodItem/list">Cancel</a>
+    <a href="<%=request.getContextPath()%>/food/list">Cancel</a>
 </body>
 </html>
