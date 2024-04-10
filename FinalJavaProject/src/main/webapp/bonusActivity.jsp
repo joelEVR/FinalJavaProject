@@ -58,6 +58,7 @@
 					<th>Quantity</th>
 					<th>Location</th>
 					<th>Expiration Date</th>
+					<th>Contact Method</th>
 					<th>Status</th>
 				</tr>
 			</thead>
@@ -73,6 +74,7 @@
 					<td><%=item.getQuantity()%></td>
 					<td><%=item.getPickupLocation()%></td>
 					<td><%=item.getExpirationDate()%></td>
+					<td><%=item.getContactMethod()%></td>
 					<td><%=item.getStatus()%></td>
 				</tr>
 				<%
@@ -80,7 +82,7 @@
 				} else {
 				%>
 				<tr>
-					<td colspan="6">No items found for the selected location.</td>
+					<td colspan="7">No items found for the selected location.</td>
 				</tr>
 				<%
 				}
