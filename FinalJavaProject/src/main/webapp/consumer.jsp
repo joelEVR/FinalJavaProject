@@ -59,5 +59,10 @@
             } 
         %>
     </table>
+    
+    <form action="<%=request.getContextPath()%>/ItemDonatedServlet" method="get">
+    <input type="hidden" name="action" value="loadLocations">
+    <input type="submit" value="Back to Locations" class="btn">
+    
 </body>
 </html>

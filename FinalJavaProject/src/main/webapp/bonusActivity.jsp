@@ -93,8 +93,7 @@
 	
 	<div class="grid">
 		<div class="form__field">
-			<a href="ItemDonatedServlet?action=loadLocations"
-				class="form__button">Come back to Main Page</a>
+			<a href="consumer.jsp" class="form__button">Come back to Main Page</a>
 		</div>
 	</div>
 </body>
