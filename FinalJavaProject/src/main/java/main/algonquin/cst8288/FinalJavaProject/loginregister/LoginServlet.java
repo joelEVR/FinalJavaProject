@@ -26,13 +26,12 @@ public class LoginServlet extends HttpServlet {
 		LoginDao loginDao = new LoginDao();
 
 		try {
-			User user = loginDao.authenticateUser(loginUser); // Recibe el objeto User
-
+			User user = loginDao.authenticateUser(loginUser); 
 			if (user != null) {
 				HttpSession session = request.getSession();
 				session.setMaxInactiveInterval(10 * 60);
 
-				session.setAttribute("email", user.getEmail()); // Guarda el nombre de usuario en la sesión
+				session.setAttribute("email", user.getEmail()); 
 				session.setAttribute("userId", user.getUserId());
 				session.setAttribute("userType", user.getUserType());
 				session.setAttribute("notification", user.isNotification());
@@ -41,7 +40,6 @@ public class LoginServlet extends HttpServlet {
 				switch (user.getUserType()) {
 				case "RETAILER":
 					System.out.println("Retailer role entered");
-					// En LoginServlet, después de la autenticación exitosa
 					response.sendRedirect(request.getContextPath() + "/ItemDonatedServlet?action=loadLocations");
 
 					/*

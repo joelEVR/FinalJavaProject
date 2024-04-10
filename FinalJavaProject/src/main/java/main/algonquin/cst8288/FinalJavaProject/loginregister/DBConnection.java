@@ -9,7 +9,6 @@ public class DBConnection {
 	
 	private static Connection connection = null;
 
-    // Constructor privado para prevenir instanciación
     private DBConnection() {}
 
 	public static Connection getConnection() {
