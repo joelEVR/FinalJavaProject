@@ -78,7 +78,6 @@ public class ItemDonatedDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println("Number of unique locations found: " + locations.size()); // Debugging line
 		return locations;
 	}
 
