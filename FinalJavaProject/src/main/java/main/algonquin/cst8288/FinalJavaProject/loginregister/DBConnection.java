@@ -5,7 +5,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+
+
 public class DBConnection {
+
 	
 	private static Connection connection = null;
 
@@ -31,16 +34,16 @@ public class DBConnection {
         
         return connection;
     }
+}
 
-    public static PreparedStatement getPreparedStatement(String sql) {
-        PreparedStatement ps;
-        Connection con = DBConnection.getConnection();
-        try {
-            ps = con.prepareStatement(sql);
-            return ps;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
+public static Connection getConnection() {
+    try {
+        // Create and return a new connection instance on every call
+        return DriverManager.getConnection(URL, USERNAME, PASSWORD);
+    } catch (SQLException e) {
+        e.printStackTrace();
+        // Consider a better exception handling strategy for your use case
+        throw new RuntimeException("Error connecting to the database", e);
     }
+}
 }

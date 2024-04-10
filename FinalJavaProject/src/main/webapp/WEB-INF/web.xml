@@ -58,6 +58,15 @@
 		<url-pattern>/ItemDonatedServlet</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<description></description>
+		<servlet-name>FoodServlet</servlet-name>
+		<servlet-class>main.algonquin.cst8288.FinalJavaProject.controller.FoodServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FoodServlet</servlet-name>
+		<url-pattern>/FoodServlet</url-pattern>
+	</servlet-mapping>
 	
 	
 

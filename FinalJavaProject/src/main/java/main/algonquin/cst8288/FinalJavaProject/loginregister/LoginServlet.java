@@ -40,31 +40,21 @@ public class LoginServlet extends HttpServlet {
 				switch (user.getUserType()) {
 				case "RETAILER":
 					System.out.println("Retailer role entered");
-					response.sendRedirect(request.getContextPath() + "/ItemDonatedServlet?action=loadLocations");
+					response.sendRedirect(request.getContextPath() + "/retailor.jsp");
 
-					/*
-					 * request.getRequestDispatcher("/bonusActivity.jsp").forward(request,
-					 * response);
-					 */ break;
+
+				 break;
 				case "CONSUMER":
 					System.out.println("Consumer role entered");
-					// En LoginServlet, después de la autenticación exitosa carga la lista de
-					// ubicaciones y redirige a funcionbonus
-					response.sendRedirect(request.getContextPath() + "/ItemDonatedServlet?action=loadLocations");
+				
+					response.sendRedirect(request.getContextPath() + "/consumer.jsp");
 
-					/*
-					 * request.getRequestDispatcher("/bonusActivity.jsp").forward(request,
-					 * response);
-					 */ break;
+					 break;
 				case "CHARITY":
 					System.out.println("Charity role entered");
-					// En LoginServlet, después de la autenticación exitosa
-					response.sendRedirect(request.getContextPath() + "/ItemDonatedServlet?action=loadLocations");
+					response.sendRedirect(request.getContextPath() + "/charity.jsp");
 
-					/*
-					 * request.getRequestDispatcher("/bonusActivity.jsp").forward(request,
-					 * response);
-					 */ break;
+					 break;
 				default:
 					throw new IllegalStateException("Unexpected value: " + user.getUserType());
 				}
