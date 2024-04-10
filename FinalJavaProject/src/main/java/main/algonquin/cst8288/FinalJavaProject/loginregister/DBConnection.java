@@ -35,15 +35,3 @@ public class DBConnection {
         return connection;
     }
 }
-
-public static Connection getConnection() {
-    try {
-        // Create and return a new connection instance on every call
-        return DriverManager.getConnection(URL, USERNAME, PASSWORD);
-    } catch (SQLException e) {
-        e.printStackTrace();
-        // Consider a better exception handling strategy for your use case
-        throw new RuntimeException("Error connecting to the database", e);
-    }
-}
-}

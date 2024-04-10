@@ -12,13 +12,12 @@ public class RegisterServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Obtén los parámetros del formulario
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
         String userType = request.getParameter("userType");
-        Boolean notification = Boolean.parseBoolean(request.getParameter("notification"));
+        Boolean notification = request.getParameter("notification") != null;
 
         // Inicializa el mensaje de error
         String errorMessage = null;
@@ -35,14 +34,12 @@ public class RegisterServlet extends HttpServlet {
         } else if(userType == null ) {
             errorMessage = "You must select user type.";
         }
-        // Si hay un mensaje de error, reenvía al usuario al formulario de registro con el mensaje de error
         if(errorMessage != null) {
             request.setAttribute("errMessage", errorMessage);
             request.getRequestDispatcher("/register.jsp").forward(request, response);
             return;
         }
 
-        // Si la validación pasa, procede con la creación del usuario
         User user = new User();
         user.setName(name);
         user.setEmail(email);
