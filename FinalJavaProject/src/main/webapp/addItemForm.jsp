@@ -23,37 +23,37 @@
             </p>
 
             <div class="form__field">
-                <label for="title"><i class="fa fa-heading"></i> <span class="hidden">Title</span></label>
+                <label for="title"><i class="fas fa-heading"></i> <span class="hidden">Title</span></label>
                 <input type="text" id="title" name="title" class="form__input"
                     placeholder="Title" required>
             </div>
 
             <div class="form__field">
-                <label for="description"><i class="fa fa-heading"></i> <span class="hidden">Description</span></label>
+                <label for="description"><i class="fas fa-heading"></i> <span class="hidden">Description</span></label>
                 <textarea id="description" name="description" class="form__input"
                     placeholder="Description" required></textarea>
             </div>
 
             <div class="form__field">
-                <label for="quantity"><i class="fa fa-sort-numeric-up"></i> <span class="hidden">Quantity</span></label>
+                <label for="quantity"><i class="fas fa-sort-numeric-up"></i> <span class="hidden">Quantity</span></label>
                 <input type="number" id="quantity" name="quantity"
                     class="form__input" placeholder="Quantity" required>
             </div>
 
             <div class="form__field">
-                <label for="pickupLocation"><i class="fa fa-map-marker-alt"></i> <span class="hidden">Pickup Location</span></label> 
+                <label for="pickupLocation"><i class="fas fa-map-marker-alt"></i> <span class="hidden">Pickup Location</span></label> 
                 <input type="text" id="pickupLocation" name="pickupLocation" class="form__input"
                     placeholder="Pickup Location" required>
             </div>
 
             <div class="form__field">
-                <label for="contactMethod"><i class="fa fa-envelope"></i> <span class="hidden">Contact Method</span></label> 
+                <label for="contactMethod"><i class="fas fa-envelope"></i> <span class="hidden">Contact Method</span></label> 
                 <input type="text" id="contactMethod" name="contactMethod" class="form__input"
                     placeholder="Contact Method" required>
             </div>
 
             <div class="form__field">
-                <label for="expirationDate"><i class="fa fa-calendar-alt"></i> <span class="hidden">Expiration Date (YYYY-MM-DD)</span></label> 
+                <label for="expirationDate"><i class="fas fa-calendar-alt"></i> <span class="hidden">Expiration Date (YYYY-MM-DD)</span></label> 
                 <input type="date" id="expirationDate" name="expirationDate"
                     class="form__input" placeholder="Expiration Date" required>
             </div>

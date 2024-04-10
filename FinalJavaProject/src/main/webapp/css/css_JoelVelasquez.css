@@ -63,6 +63,17 @@ body {
 	min-height: 100vh;
 }
 
+
+h3 {
+    text-align: center; /* Centra el texto dentro del h3 */
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: -10px;
+    width: 100%; /* O el ancho que prefieras */
+}
+
+
 h4 {
 	margin-left: 30px;
 	margin-right: auto;
@@ -226,4 +237,13 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 
 .action-icon {
 	margin: 0 10px;
+}
+
+.fas {
+    color: #7bc043; 
+}
+
+input[type='checkbox'] {
+  width: 22px; 
+  height: 22px;
 }
