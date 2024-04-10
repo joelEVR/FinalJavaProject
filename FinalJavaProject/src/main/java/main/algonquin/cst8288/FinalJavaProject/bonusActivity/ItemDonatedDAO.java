@@ -17,7 +17,7 @@ public class ItemDonatedDAO {
 	}
 
 	public boolean addItemDonated(ItemDonated ItemDonated) {
-		String query = "INSERT INTO FoodItemsForExchange (UserId, Title, Description, Quantity, PickupLocation, ExpirationDate, Status) VALUES (?, ?, ?, ?, ?, ?, 'available')";
+		String query = "INSERT INTO FoodItemsForExchange (UserId, Title, Description, Quantity, PickupLocation, ExpirationDate, Status, ContactMethod) VALUES (?, ?, ?, ?, ?, ?, 'available', ?)";
 
 		try (PreparedStatement ps = con.prepareStatement(query)) {
 			ps.setInt(1, ItemDonated.getUserId());
@@ -26,6 +26,7 @@ public class ItemDonatedDAO {
 			ps.setInt(4, ItemDonated.getQuantity());
 			ps.setString(5, ItemDonated.getPickupLocation());
 			ps.setString(6, ItemDonated.getExpirationDate());
+			ps.setString(7, ItemDonated.getContactMethod());
 			ps.executeUpdate();
 			return true;
 		} catch (SQLException e) {
@@ -35,7 +36,7 @@ public class ItemDonatedDAO {
 	}
 
 	public boolean updateItemDonated(ItemDonated ItemDonated) {
-		String query = "UPDATE FoodItemsForExchange SET Title = ?, Description = ?, Quantity = ?, PickupLocation = ?, ExpirationDate = ?, Status = ? WHERE ItemId = ? AND UserId = ?";
+		String query = "UPDATE FoodItemsForExchange SET Title = ?, Description = ?, Quantity = ?, PickupLocation = ?, ExpirationDate = ?, Status = ?, ContactMethod = ? WHERE ItemId = ? AND UserId = ?";
 		try (PreparedStatement ps = con.prepareStatement(query)) {
 			ps.setString(1, ItemDonated.getTitle());
 			ps.setString(2, ItemDonated.getDescription());
@@ -43,8 +44,9 @@ public class ItemDonatedDAO {
 			ps.setString(4, ItemDonated.getPickupLocation());
 			ps.setString(5, ItemDonated.getExpirationDate());
 			ps.setString(6, ItemDonated.getStatus());
-			ps.setInt(7, ItemDonated.getItemId());
-			ps.setInt(8, ItemDonated.getUserId());
+			ps.setString(7, ItemDonated.getContactMethod());
+			ps.setInt(8, ItemDonated.getItemId());
+			ps.setInt(9, ItemDonated.getUserId());
 			int affectedRows = ps.executeUpdate();
 			return affectedRows > 0;
 		} catch (SQLException e) {
@@ -76,7 +78,6 @@ public class ItemDonatedDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println("Number of unique locations found: " + locations.size()); // Debugging line
 		return locations;
 	}
 
@@ -88,15 +89,15 @@ public class ItemDonatedDAO {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				ItemDonated item = new ItemDonated();
-				item.setItemId(rs.getInt("ItemId")); // Asume que tienes un campo ItemId en tu tabla
-				item.setUserId(rs.getInt("UserId")); // Asume que tienes un campo UserId en tu tabla
+				item.setItemId(rs.getInt("ItemId")); 
+				item.setUserId(rs.getInt("UserId"));
 				item.setTitle(rs.getString("Title"));
 				item.setDescription(rs.getString("Description"));
 				item.setQuantity(rs.getInt("Quantity"));
 				item.setPickupLocation(rs.getString("PickupLocation"));
-				item.setExpirationDate(rs.getString("ExpirationDate")); // Asegúrate de que este formato coincida con tu
-																		// JSP
+				item.setExpirationDate(rs.getString("ExpirationDate")); 
 				item.setStatus(rs.getString("Status"));
+				item.setContactMethod(rs.getString("ContactMethod"));
 				items.add(item);
 			}
 		} catch (SQLException e) {
@@ -121,6 +122,7 @@ public class ItemDonatedDAO {
 				item.setPickupLocation(rs.getString("PickupLocation"));
 				item.setExpirationDate(rs.getString("ExpirationDate"));
 				item.setStatus(rs.getString("Status"));
+				item.setContactMethod(rs.getString("ContactMethod"));
 				items.add(item);
 			}
 		} catch (SQLException e) {
@@ -144,6 +146,7 @@ public class ItemDonatedDAO {
 					item.setPickupLocation(rs.getString("PickupLocation"));
 					item.setExpirationDate(rs.getString("ExpirationDate"));
 					item.setStatus(rs.getString("Status"));
+					item.setContactMethod(rs.getString("ContactMethod"));
 					return item;
 				}
 			}

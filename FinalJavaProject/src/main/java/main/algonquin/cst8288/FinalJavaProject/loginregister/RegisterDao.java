@@ -26,9 +26,9 @@ public class RegisterDao {
             con = DBConnection.getConnection();
 
             String query = "INSERT INTO users(userID, name, email, password, userType, notification) VALUES (null, ?, ?, ?, ?, ?)";
-            preparedStatement = con.prepareStatement(query); //Making use of prepared statements to insert bunch of data
+            preparedStatement = con.prepareStatement(query); 
             
-            String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt(12)); // Encriptar contraseña
+            String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt(12)); 
             
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, email);
@@ -38,7 +38,7 @@ public class RegisterDao {
 
             int i = preparedStatement.executeUpdate();
 
-            if (i != 0)  //Just to ensure data has been inserted into the database
+            if (i != 0)  
                 return "SUCCESS";
         } catch (SQLException e) {
             e.printStackTrace();

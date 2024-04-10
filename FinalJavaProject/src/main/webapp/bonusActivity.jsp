@@ -15,7 +15,7 @@
 		<h2 class="text--center">Welcome to the Donation Platform</h2>
 
 		<div class="form__field">
-			<a href="addItem.jsp" class="form__button">Add Item to Donate</a>
+			<a href="addItemForm.jsp" class="form__button">Add Item to Donate</a>
 		</div>
 
 		<div class="form__field">
@@ -58,6 +58,7 @@
 					<th>Quantity</th>
 					<th>Location</th>
 					<th>Expiration Date</th>
+					<th>Contact Method</th>
 					<th>Status</th>
 				</tr>
 			</thead>
@@ -73,6 +74,7 @@
 					<td><%=item.getQuantity()%></td>
 					<td><%=item.getPickupLocation()%></td>
 					<td><%=item.getExpirationDate()%></td>
+					<td><%=item.getContactMethod()%></td>
 					<td><%=item.getStatus()%></td>
 				</tr>
 				<%
@@ -80,13 +82,20 @@
 				} else {
 				%>
 				<tr>
-					<td colspan="6">No items found for the selected location.</td>
+					<td colspan="7">No items found for the selected location.</td>
 				</tr>
 				<%
 				}
 				%>
 			</tbody>
 		</table>
+	</div>
+	
+	<div class="grid">
+		<div class="form__field">
+			<a href="ItemDonatedServlet?action=loadLocations"
+				class="form__button">Come back to Main Page</a>
+		</div>
 	</div>
 </body>
 </html>

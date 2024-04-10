@@ -20,8 +20,6 @@
 	</div>
 	<div class="gridtable">
 
-
-
 		<table class="table">
 			<thead>
 				<tr>
@@ -30,7 +28,8 @@
 					<th>Quantity</th>
 					<th>Location</th>
 					<th>Expiration Date</th>
-					<th>Status</th>					
+					<th>Contact Method</th>
+					<th>Status</th>
 
 					<th>Actions</th>
 				</tr>
@@ -47,19 +46,31 @@
 					<td><%=item.getQuantity()%></td>
 					<td><%=item.getPickupLocation()%></td>
 					<td><%=item.getExpirationDate()%></td>
+					<td><%=item.getContactMethod()%></td>
 					<td><%=item.getStatus()%></td>
 
 					<td class="td-center">
 						<div class="icon-container">
-							<a
-								href="ItemDonatedServlet?action=edit&itemId=<%=item.getItemId()%>"
-								class="action-icon"> <i class="fas fa-edit"
-								style="color: #4CAF50;"></i>
-							</a> <a
-								href="ItemDonatedServlet?action=delete&itemId=<%=item.getItemId()%>"
-								class="action-icon"> <i class="fas fa-trash-alt"
-								style="color: #F44336;"></i>
-							</a>
+							<form action="ItemDonatedServlet" method="post"
+								style="display: inline;">
+								<input type="hidden" name="action" value="edit"> <input
+									type="hidden" name="itemId" value="<%=item.getItemId()%>">
+								<button type="submit" class="action-icon"
+									style="background: none; border: none; cursor: pointer;">
+									<i class="fas fa-edit" style="color: #4CAF50;"></i>
+								</button>
+							</form>
+
+							<form action="ItemDonatedServlet" method="post"
+								style="display: inline;">
+								<input type="hidden" name="action" value="delete"> <input
+									type="hidden" name="itemId" value="<%=item.getItemId()%>">
+								<button type="submit" class="action-icon"
+									style="background: none; border: none; cursor: pointer;">
+									<i class="fas fa-trash-alt" style="color: #F44336;"></i>
+								</button>
+							</form>
+
 						</div>
 					</td>
 
@@ -70,7 +81,7 @@
 				} else {
 				%>
 				<tr>
-					<td colspan="5">No items found.</td>
+					<td colspan="8">No items found.</td>
 				</tr>
 				<%
 				}
