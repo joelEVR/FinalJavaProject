@@ -211,9 +211,10 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 }
 
 .table {
+	margin-top: 20px; 
 	width: 100%;
 	border-collapse: collapse;
-	table-layout: fixed;
+	table-layout: auto;
 }
 
 .table th, .table td {
@@ -247,3 +248,5 @@ input[type='checkbox'] {
   width: 22px; 
   height: 22px;
 }
+
+
